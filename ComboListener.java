@@ -12,8 +12,7 @@ public class ComboListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JComboBox) {
-            JComboBox cb = (JComboBox) e.getSource();
+        if (e.getSource() instanceof JComboBox cb) {
             myPanel.setColor(Objects.requireNonNull(cb.getSelectedItem()).toString());
         }
     }
