@@ -1,5 +1,3 @@
-import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -33,6 +31,7 @@ public class MouListener implements MouseListener {
                     Math.min(y1, y2),
                     Math.abs(x2 - x1),
                     Math.abs(y2 - y1));
+
         myPanel.repaint();
     }
 

@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class SouthPanel extends JPanel {
     public SouthPanel() {
-        WidgetListener wl = new WidgetListener();
+        ButtonListener wl = new ButtonListener();
         JButton undo = new JButton("Undo");
         JButton erase = new JButton("Erase");
         add(undo);

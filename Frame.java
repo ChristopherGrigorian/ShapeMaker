@@ -12,9 +12,9 @@ public class Frame extends JFrame {
     }
 
     public Frame() {
-        JPanel panel = new DrawPanel();
-        JPanel panel2 = new SouthPanel();
-        JPanel panel3 = new WestPanel();
+        DrawPanel panel = new DrawPanel();
+        SouthPanel panel2 = new SouthPanel();
+        WestPanel panel3 = new WestPanel(panel);
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
         add(panel2, BorderLayout.SOUTH);
