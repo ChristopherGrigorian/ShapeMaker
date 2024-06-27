@@ -15,7 +15,7 @@ public class WestPanel extends JPanel {
         setLayout(new GridLayout(7,1));
         add(colorBox);
         add(recRadio);
-        add(recRadio);
+        add(cirRadio);
         add(arcRadio);
     }
 }
