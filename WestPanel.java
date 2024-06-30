@@ -3,9 +3,9 @@ import java.awt.*;
 
 
 public class WestPanel extends JPanel {
-    public WestPanel(DrawPanel panel) {
-        String[] colors = {"Blue", "Red", "Green", "Yellow"};
-        JComboBox colorBox = new JComboBox(colors);
+    public WestPanel() {
+        String[] colors = {"Black", "Blue", "Red", "Green", "Yellow"};
+        JComboBox<String> colorBox = new JComboBox<>(colors);
         JRadioButton recRadio = new JRadioButton("Rectangle");
         JRadioButton cirRadio = new JRadioButton("Circle");
         JRadioButton arcRadio = new JRadioButton("Arc");
@@ -18,15 +18,12 @@ public class WestPanel extends JPanel {
         add(recRadio);
         add(cirRadio);
         add(arcRadio);
-
         recRadio.setSelected(true);
 
-        ComboListener cl = new ComboListener(panel);
-        colorBox.addActionListener(cl);
-
-        RadioListener rl = new RadioListener(panel);
-        recRadio.addActionListener(rl);
-        cirRadio.addActionListener(rl);
-        arcRadio.addActionListener(rl);
+        ActListener al = new ActListener();
+        colorBox.addActionListener(al);
+        recRadio.addActionListener(al);
+        cirRadio.addActionListener(al);
+        arcRadio.addActionListener(al);
     }
 }

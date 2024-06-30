@@ -3,10 +3,6 @@ import java.awt.event.MouseListener;
 
 public class MouListener implements MouseListener {
     int x1, x2, y1, y2;
-    DrawPanel myPanel;
-    public MouListener(DrawPanel panel) {
-        myPanel = panel;
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -15,24 +11,24 @@ public class MouListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("Mou Pressed");
+       // System.out.println("Mou Pressed");
         x1 = e.getX();
         y1 = e.getY();
-
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        System.out.println("Mou Released");
+       // System.out.println("Mou Released");
         x2 = e.getX();
         y2 = e.getY();
-        //System.out.println(x1 + ", " + y1 + ", " + x2 + ", " + y2);
-        myPanel.set(Math.min(x1, x2),
-                    Math.min(y1, y2),
-                    Math.abs(x2 - x1),
-                    Math.abs(y2 - y1));
-
-        myPanel.repaint();
+        if (Overseer.getShape().equals("Rectangle")) {
+            Overseer.pushToStack(new Rectangle(Overseer.getColor(), x1, y1, x2-x1, y2-y1));
+        } else if (Overseer.getShape().equals("Circle")) {
+            Overseer.pushToStack(new Circle(Overseer.getColor(), x1, y1, x2-x1, y2-y1));
+        } else {
+            Overseer.pushToStack(new Arc(Overseer.getColor(), x1, y1, x2-x1, y2-y1));
+        }
+        Overseer.doSomething();
     }
 
     @Override

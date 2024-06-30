@@ -12,13 +12,18 @@ public class Frame extends JFrame {
     }
 
     public Frame() {
-        DrawPanel panel = new DrawPanel();
-        SouthPanel panel2 = new SouthPanel();
-        WestPanel panel3 = new WestPanel(panel);
+        JPanel drawPanel = new DrawPanel();
+        Overseer.setDrawPanel(drawPanel);
+        MouListener ml = new MouListener();
+        Overseer.getDrawPanel().addMouseListener(ml);
+
+        JPanel southPanel = new SouthPanel();
+        JPanel westPanel = new WestPanel();
+
         setLayout(new BorderLayout());
-        add(panel, BorderLayout.CENTER);
-        add(panel2, BorderLayout.SOUTH);
-        add(panel3, BorderLayout.WEST);
+        add(drawPanel, BorderLayout.CENTER);
+        add(southPanel, BorderLayout.SOUTH);
+        add(westPanel, BorderLayout.WEST);
 
 
     }
