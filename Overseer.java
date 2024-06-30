@@ -79,4 +79,12 @@ public class Overseer {
     public static void pushToStack(Shape shape) {
         Overseer.shapes.add(shape);
     }
+
+    public static void popFromStack() {
+        shapes.pop();
+    }
+
+    public static void clearStack() {
+        shapes.clear();
+    }
 }
