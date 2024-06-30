@@ -7,7 +7,7 @@ import java.util.Objects;
 public class ActListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JComboBox cb) {
+        if (e.getSource() instanceof JComboBox<?> cb) {
             String chosenColor = (String) cb.getSelectedItem();
             switch (Objects.requireNonNull(chosenColor)) {
                 case "Black" -> Overseer.setColor(Color.BLACK);
@@ -20,9 +20,11 @@ public class ActListener implements ActionListener {
             Overseer.setShape(e.getActionCommand());
         } else {
             if (e.getActionCommand().equals("Undo")) {
-                System.out.println("Undo has been pressed!");
-            } else {
-                System.out.println("Erase has been pressed!");
+                Overseer.popFromStack();
+                Overseer.doSomething();
+            } else if (e.getActionCommand().equals("Erase")) {
+                Overseer.clearStack();
+                Overseer.doSomething();
             }
         }
     }
