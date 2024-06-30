@@ -1,6 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @author christophergrigorian (Christopher Grigorian)
+ * @author [put your github] (Name)
+ * @author [put your github] (Name)
+ */
+
 public class Frame extends JFrame {
     public static void main(String[] args) {
         Frame app = new Frame();

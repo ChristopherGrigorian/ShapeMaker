@@ -4,6 +4,7 @@ import java.util.Stack;
 
 public class Overseer {
     private static final Stack<Shape> shapes = new Stack<>();
+    private static final Stack<Shape> redoShapes = new Stack<>();
     private static JPanel drawPanel;
     private static Color color;
     private static int XCord;
@@ -70,6 +71,7 @@ public class Overseer {
 
     public static void doSomething() {
         drawPanel.repaint();
+
     }
 
     public static Stack<Shape> getStack() {
@@ -78,13 +80,22 @@ public class Overseer {
 
     public static void pushToStack(Shape shape) {
         Overseer.shapes.add(shape);
+
+        // This line is necessary to prevent interaction of undo -> draw -> and then redo
+        // remembering what was undone. Redo stack should be reset when a new Shape is pushed to the stack, because
+        // whatever was undone should not be remembered after new shape is drawn.
+        Overseer.redoShapes.clear();
     }
 
     public static void popFromStack() {
-        shapes.pop();
+        if (!shapes.isEmpty()) {
+            redoShapes.add(shapes.pop());
+        }
     }
 
-    public static void clearStack() {
-        shapes.clear();
+    public static void redoToStack() {
+        if (!redoShapes.isEmpty()) {
+            Overseer.shapes.add(redoShapes.pop());
+        }
     }
 }

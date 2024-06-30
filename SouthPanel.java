@@ -3,12 +3,12 @@ import javax.swing.*;
 public class SouthPanel extends JPanel {
     public SouthPanel() {
         JButton undo = new JButton("Undo");
-        JButton erase = new JButton("Erase");
+        JButton redo = new JButton("Redo");
         add(undo);
-        add(erase);
+        add(redo);
 
         ActListener al = new ActListener();
         undo.addActionListener(al);
-        erase.addActionListener(al);
+        redo.addActionListener(al);
     }
 }

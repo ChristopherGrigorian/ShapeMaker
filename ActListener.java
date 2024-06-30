@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class ActListener implements ActionListener {
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JComboBox<?> cb) {
@@ -22,8 +23,8 @@ public class ActListener implements ActionListener {
             if (e.getActionCommand().equals("Undo")) {
                 Overseer.popFromStack();
                 Overseer.doSomething();
-            } else if (e.getActionCommand().equals("Erase")) {
-                Overseer.clearStack();
+            } else if (e.getActionCommand().equals("Redo")) {
+                Overseer.redoToStack();
                 Overseer.doSomething();
             }
         }
