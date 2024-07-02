@@ -16,6 +16,8 @@ public class Frame extends JFrame {
         Overseer.setDrawPanel(drawPanel);
         MouListener ml = new MouListener();
         Overseer.getDrawPanel().addMouseListener(ml);
+        DragListener dl = new DragListener();
+        Overseer.getDrawPanel().addMouseMotionListener(dl);
 
         JPanel southPanel = new SouthPanel();
         JPanel westPanel = new WestPanel();

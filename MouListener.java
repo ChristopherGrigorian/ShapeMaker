@@ -14,6 +14,13 @@ public class MouListener implements MouseListener {
        // System.out.println("Mou Pressed");
         x1 = e.getX();
         y1 = e.getY();
+        if (Overseer.getShape().equals("Rectangle")) {
+            Overseer.setCurrShape(new Rectangle(Overseer.getColor(), x1, y1, 0, 0));
+        } else if (Overseer.getShape().equals("Circle")) {
+            Overseer.setCurrShape(new Circle(Overseer.getColor(), x1, y1, 0, 0));
+        } else {
+            Overseer.setCurrShape(new Arc(Overseer.getColor(), x1, y1, 0, 0));
+        }
     }
 
     @Override
@@ -28,6 +35,7 @@ public class MouListener implements MouseListener {
         } else {
             Overseer.pushToStack(new Arc(Overseer.getColor(), x1, y1, x2-x1, y2-y1));
         }
+        Overseer.setCurrShape(null);
         Overseer.doSomething();
     }
 
