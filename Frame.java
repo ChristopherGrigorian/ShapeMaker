@@ -3,8 +3,9 @@ import java.awt.*;
 
 /**
  * @author christophergrigorian (Christopher Grigorian)
- * @author CharlieRay668 (Charlie Ray
+ * @author CharlieRay668 (Charlie Ray)
  * @author manualdriver (Harold Ellis)
+ * @author Eric Canihuante
  */
 
 public class Frame extends JFrame {
