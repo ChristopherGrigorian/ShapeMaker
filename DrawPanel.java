@@ -10,12 +10,11 @@ public class DrawPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Shape currShape = Overseer.getCurrShape();
-        if (currShape != null) {
-            currShape.drawShape(g);
-        }
         for (Shape s : Overseer.getStack()) {
             s.drawShape(g);
+        }
+        if (Overseer.getBox() != null) {
+            Overseer.getBox().drawShape(g);
         }
     }
 }
