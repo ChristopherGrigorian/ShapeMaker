@@ -2,9 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author christophergrigorian (Christopher Grigorian)
- * @author [put your github] (Name)
- * @author [put your github] (Name)
+ * @author Christopher Grigorian
+ * @author Charlie Ray
+ * @author Eric Canihuante
+ * @author Harold Ellis
  */
 
 public class Frame extends JFrame {
