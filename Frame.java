@@ -2,10 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author Christopher Grigorian
- * @author Charlie Ray
- * @author Eric Canihuante
- * @author Harold Ellis
+ * @author christophergrigorian (Christopher Grigorian)
+ * @author CharlieRay668 (Charlie Ray
+ * @author manualdriver (Harold Ellis)
  */
 
 public class Frame extends JFrame {
