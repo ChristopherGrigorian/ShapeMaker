@@ -13,6 +13,8 @@ public class Overseer {
     private static int height;
     private static String shape;
 
+    private static Shape currShape;
+
     public static JPanel getDrawPanel() {
         return drawPanel;
     }
@@ -27,6 +29,14 @@ public class Overseer {
 
     public static void setColor(Color color) {
         Overseer.color = color;
+    }
+
+    public static Shape getCurrShape() {
+        return currShape;
+    }
+
+    public static void setCurrShape(Shape shape) {
+        currShape = shape;
     }
 
     public static int getXCord() {

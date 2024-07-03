@@ -9,6 +9,15 @@ public class Rectangle extends Shape {
     @Override
     public void drawShape(Graphics g) {
         g.setColor(color);
+        if (w < 0) {
+            g.fillRect(x + w, y, -w, h);
+        }
+        if (h < 0) {
+            g.fillRect(x, y + h, w, -h);
+        }
+        if (w < 0 && h < 0) {
+            g.fillRect(x + w, y + h, -w, -h);
+        }
         g.fillRect(x, y, w, h);
     }
 }
