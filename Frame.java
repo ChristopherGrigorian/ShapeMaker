@@ -4,7 +4,7 @@ import java.awt.*;
 /**
  * @author christophergrigorian (Christopher Grigorian)
  * @author CharlieRay668 (Charlie Ray
- * @author [put your github] (Name)
+ * @author manualdriver (Harold Ellis)
  */
 
 public class Frame extends JFrame {
