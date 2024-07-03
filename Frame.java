@@ -3,7 +3,7 @@ import java.awt.*;
 
 /**
  * @author christophergrigorian (Christopher Grigorian)
- * @author manualdriver (Harold Ellis)
+ * @author CharlieRay668 (Charlie Ray
  * @author [put your github] (Name)
  */
 
