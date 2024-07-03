@@ -21,6 +21,7 @@ public class ActListener implements ActionListener {
             Overseer.setShape(e.getActionCommand());
         } else {
             if (e.getActionCommand().equals("Undo")) {
+
                 Overseer.popFromStack();
                 Overseer.doSomething();
             } else if (e.getActionCommand().equals("Redo")) {
