@@ -17,7 +17,5 @@ public class Arc extends Shape {
         g.setColor(color);
         int adjustedY = flip ? y - h : y;
         g.fillArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
-        //System.out.println(x);
-        //System.out.println(y);
     }
 }
