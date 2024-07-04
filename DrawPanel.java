@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The DrawPanel class is a custom JPanel that handles drawing shapes onto the panel.
+ */
+
 public class DrawPanel extends JPanel {
 
     public DrawPanel() {

@@ -2,10 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * The Frame class represents the main application window.
+ * It extends JFrame and sets up the user interface, including the drawing panel and menu bar.
+ *
  * @author christophergrigorian (Christopher Grigorian)
  * @author CharlieRay668 (Charlie Ray)
  * @author manualdriver (Harold Ellis)
  * @author ecan00 (Eric Canihuante)
+ *
  */
 
 public class Frame extends JFrame {

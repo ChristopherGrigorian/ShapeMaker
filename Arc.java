@@ -1,5 +1,10 @@
 import java.awt.*;
 
+/**
+ * The Arc class represents a drawable arc shape. It extends the Shape class and includes
+ * functionality to draw an arc either normally or flipped upside down.
+ */
+
 public class Arc extends Shape {
     private final int startAngle;
     private final int arcAngle;

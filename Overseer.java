@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Stack;
 
+/**
+ * The Overseer class manages the state and operations related to drawing shapes in the application.
+ * This class is essentially the "table" from lecture.
+ */
+
 public class Overseer {
     private static final Stack<Shape> shapes = new Stack<>();
     private static final Stack<Shape> redoShapes = new Stack<>();

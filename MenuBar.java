@@ -1,6 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The MenuBar class represents the menu bar of the application.
+ * It includes menus for selecting shapes, colors, and editing actions.
+ */
+
 public class MenuBar extends JMenuBar {
     public MenuBar() {
         // Shape Menu
