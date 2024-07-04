@@ -4,7 +4,7 @@ import java.awt.*;
 public class DrawPanel extends JPanel {
 
     public DrawPanel() {
-        setBackground(Color.CYAN);
+        setBackground(new Color(176, 250, 192));
     }
 
     @Override

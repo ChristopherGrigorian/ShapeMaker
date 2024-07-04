@@ -12,14 +12,12 @@ public class MouListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-       // System.out.println("Mou Pressed");
         x1 = e.getX();
         y1 = e.getY();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-       // System.out.println("Mou Released");
         x2 = e.getX();
         y2 = e.getY();
 
@@ -28,12 +26,14 @@ public class MouListener implements MouseListener, MouseMotionListener {
         w = Math.abs(x2 - x1);
         h = Math.abs(y2 - y1);
 
+        boolean flip = y2 > y1; // Determine if arc should flip
+
         if (Overseer.getShape().equals("Rectangle")) {
             Overseer.pushToStack(new Rectangle(Overseer.getColor(), x, y, w, h));
         } else if (Overseer.getShape().equals("Circle")) {
             Overseer.pushToStack(new Circle(Overseer.getColor(), x, y, w, h));
         } else {
-            Overseer.pushToStack(new Arc(Overseer.getColor(), x, y, w, h));
+            Overseer.pushToStack(new Arc(Overseer.getColor(), x, y, w, h, flip));
         }
 
         Overseer.setBox(null);
@@ -52,16 +52,17 @@ public class MouListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        //System.out.println("hello");
         int dx = Math.min(x1, e.getX());
         int dy = Math.min(y1, e.getY());
         int dw = Math.abs(e.getX() - x1);
         int dh = Math.abs(e.getY() - y1);
 
+        boolean flip = e.getY() > y1; // Determine if arc should flip
+
         switch (Overseer.getShape()) {
             case "Rectangle" -> Overseer.setBox(new Rectangle(Overseer.getColor(), dx, dy, dw, dh));
             case "Circle" -> Overseer.setBox(new Circle(Overseer.getColor(), dx, dy, dw, dh));
-            case "Arc" -> Overseer.setBox(new Arc(Overseer.getColor(), dx, dy, dw, dh));
+            case "Arc" -> Overseer.setBox(new Arc(Overseer.getColor(), dx, dy, dw, dh, flip));
         }
         Overseer.doSomething();
     }

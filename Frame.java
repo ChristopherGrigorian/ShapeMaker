@@ -5,7 +5,7 @@ import java.awt.*;
  * @author christophergrigorian (Christopher Grigorian)
  * @author CharlieRay668 (Charlie Ray)
  * @author manualdriver (Harold Ellis)
- * @author Eric Canihuante
+ * @author ecan00 (Eric Canihuante)
  */
 
 public class Frame extends JFrame {
@@ -25,13 +25,11 @@ public class Frame extends JFrame {
         Overseer.getDrawPanel().addMouseListener(ml);
         Overseer.getDrawPanel().addMouseMotionListener(ml);
 
-        JPanel southPanel = new SouthPanel();
-        JPanel westPanel = new WestPanel();
-
         setLayout(new BorderLayout());
         add(drawPanel, BorderLayout.CENTER);
-        add(southPanel, BorderLayout.SOUTH);
-        add(westPanel, BorderLayout.WEST);
+
+        JMenuBar menuBar = new MenuBar();
+        setJMenuBar(menuBar);
 
 
     }
