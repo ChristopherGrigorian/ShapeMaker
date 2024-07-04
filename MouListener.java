@@ -3,7 +3,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class MouListener implements MouseListener, MouseMotionListener {
-    int x1, x2, y1, y2, x, y, w, h;
+    private int x1;
+    private int y1;
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -18,13 +19,13 @@ public class MouListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        x2 = e.getX();
-        y2 = e.getY();
+        int x2 = e.getX();
+        int y2 = e.getY();
 
-        x = Math.min(x1, x2);
-        y = Math.min(y1, y2);
-        w = Math.abs(x2 - x1);
-        h = Math.abs(y2 - y1);
+        int x = Math.min(x1, x2);
+        int y = Math.min(y1, y2);
+        int w = Math.abs(x2 - x1);
+        int h = Math.abs(y2 - y1);
 
         boolean flip = y2 > y1; // Determine if arc should flip
 
