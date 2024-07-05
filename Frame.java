@@ -98,6 +98,9 @@ public class Frame extends JFrame {
         menuBar.add(colorMenu);
         menuBar.add(createEditMenu());
 
+        //Create about menu
+        menuBar.add(createAboutButton());
+
         setJMenuBar(menuBar);
     }
 
@@ -121,5 +124,31 @@ public class Frame extends JFrame {
         editMenu.add(redoAction);
 
         return editMenu;
+    }
+
+    private JButton createAboutButton() {
+        JButton button = new JButton("About");
+        button.setOpaque(true);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusable(false);
+        button.addActionListener(e -> dialogBox());
+        return button;
+    }
+
+    private void dialogBox() {
+        // create a dialog Box
+        JDialog d = new JDialog(this, "About us");
+
+        JLabel l = new JLabel();
+
+        l.setText("<html>@author christophergrigorian (Christopher Grigorian) <br>" +
+                "<html>@author CharlieRay668 (Charlie Ray) <br>" +
+                "<html>@author manualdriver (Harold Ellis) <br>" +
+                "@author ecan00 (Eric Canihuante)</html>");
+
+        d.add(l);
+        d.setSize(300, 150);
+        d.setVisible(true);
     }
 }
