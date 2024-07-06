@@ -14,6 +14,7 @@ public class Overseer {
     private static Color color;
     private static String shape;
     private static Shape box;
+    private static boolean clearPerformed = false;
 
     public static JPanel getDrawPanel() {
         return drawPanel;
@@ -49,6 +50,7 @@ public class Overseer {
 
     public static void pushToStack(Shape shape) {
         Overseer.shapes.add(shape);
+        Overseer.clearPerformed = false;
         Overseer.redoShapes.clear();
     }
 
@@ -60,7 +62,21 @@ public class Overseer {
 
     public static void redoToStack() {
         if (!redoShapes.isEmpty()) {
-            Overseer.shapes.add(redoShapes.pop());
+            if (!clearPerformed) {
+                Overseer.shapes.add(redoShapes.pop());
+            } else {
+                clearPerformed = false;
+                shapes.addAll(redoShapes);
+                redoShapes.clear();
+            }
+        }
+    }
+
+    public static void clearStack() {
+        if (!shapes.isEmpty()) {
+            redoShapes.addAll(shapes);
+            clearPerformed = true;
+            shapes.clear();
         }
     }
 

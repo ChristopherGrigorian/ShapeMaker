@@ -109,6 +109,7 @@ public class Frame extends JFrame {
         JMenu editMenu = new JMenu("Edit");
         JMenuItem undoAction = new JMenuItem("Undo");
         JMenuItem redoAction = new JMenuItem("Redo");
+        JMenuItem eraseAction = new JMenuItem("Erase");
 
         // Action listeners for undo/redo actions
         undoAction.addActionListener(e -> {
@@ -120,8 +121,14 @@ public class Frame extends JFrame {
             Overseer.doSomething();
         });
 
+        eraseAction.addActionListener(e -> {
+            Overseer.clearStack();
+            Overseer.doSomething();
+        });
+
         editMenu.add(undoAction);
         editMenu.add(redoAction);
+        editMenu.add(eraseAction);
 
         return editMenu;
     }
