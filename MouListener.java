@@ -24,26 +24,7 @@ public class MouListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        int x2 = e.getX();
-        int y2 = e.getY();
-
-        int x = Math.min(x1, x2);
-        int y = Math.min(y1, y2);
-        int w = Math.abs(x2 - x1);
-        int h = Math.abs(y2 - y1);
-
-        boolean flip = y2 > y1; // Determine if arc should flip
-
-        if (Overseer.getShape().equals("Rectangle")) {
-            Overseer.pushToStack(new Rectangle(Overseer.getColor(), x, y, w, h));
-        } else if (Overseer.getShape().equals("Circle")) {
-            Overseer.pushToStack(new Circle(Overseer.getColor(), x, y, w, h));
-        } else {
-            Overseer.pushToStack(new Arc(Overseer.getColor(), x, y, w, h, flip));
-        }
-
-        Overseer.setBox(null);
-        Overseer.doSomething();
+        shapeCalculation(e, false);
     }
 
     @Override
@@ -58,23 +39,38 @@ public class MouListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        int dx = Math.min(x1, e.getX());
-        int dy = Math.min(y1, e.getY());
-        int dw = Math.abs(e.getX() - x1);
-        int dh = Math.abs(e.getY() - y1);
-
-        boolean flip = e.getY() > y1; // Determine if arc should flip
-
-        switch (Overseer.getShape()) {
-            case "Rectangle" -> Overseer.setBox(new Rectangle(Overseer.getColor(), dx, dy, dw, dh));
-            case "Circle" -> Overseer.setBox(new Circle(Overseer.getColor(), dx, dy, dw, dh));
-            case "Arc" -> Overseer.setBox(new Arc(Overseer.getColor(), dx, dy, dw, dh, flip));
-        }
-        Overseer.doSomething();
+        shapeCalculation(e, true);
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
 
+    }
+
+    private void shapeCalculation(MouseEvent e, boolean isDragging) {
+        int x = Math.min(x1, e.getX());
+        int y = Math.min(y1, e.getY());
+        int w = Math.abs(e.getX() - x1);
+        int h = Math.abs(e.getY() - y1);
+        boolean flip = e.getY() > y1; // Determine if arc should flip
+        String currentShape = Overseer.getShape();
+
+        if (isDragging) {
+            switch (currentShape) {
+                case "Rectangle" -> Overseer.setBox(new Rectangle(Overseer.getColor(), x, y, w, h));
+                case "Circle" -> Overseer.setBox(new Circle(Overseer.getColor(), x, y, w, h));
+                case "Arc" -> Overseer.setBox(new Arc(Overseer.getColor(), x, y, w, h, flip));
+                case "Line" -> Overseer.setBox(new Line(Overseer.getColor(), x1, y1, e.getX(), e.getY()));
+            }
+        } else {
+            switch (currentShape) {
+                case "Rectangle" -> Overseer.pushToStack(new Rectangle(Overseer.getColor(), x, y, w, h));
+                case "Circle" -> Overseer.pushToStack(new Circle(Overseer.getColor(), x, y, w, h));
+                case "Arc" -> Overseer.pushToStack(new Arc(Overseer.getColor(), x, y, w, h, flip));
+                case "Line" -> Overseer.pushToStack(new Line(Overseer.getColor(), x1, y1, e.getX(), e.getY()));
+            }
+            Overseer.setBox(null);
+        }
+        Overseer.doSomething();
     }
 }

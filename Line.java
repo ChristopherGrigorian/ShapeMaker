@@ -1,25 +1,22 @@
 import java.awt.*;
 import java.io.*;
 
-/**
- * The Rectangle class represents a drawable rectangle shape.
- * It extends the Shape class and includes functionality to draw a filled rectangle.
- */
+public class Line extends Shape implements Serializable {
 
-public class Rectangle extends Shape implements Serializable {
-
-    public Rectangle(Color color, int x, int y, int w, int h) {
+    public Line(Color color, int x, int y, int w, int h) {
         super(color, x, y, w, h);
     }
 
     @Override
     public void drawShape(Graphics g) {
-        g.setColor(color);
-        g.fillRect(x, y, w, h);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(7));
+        g2d.setColor(color);
+        g2d.drawLine(x, y, w, h);
     }
 
     @Serial
-    private void writeObject(ObjectOutputStream out) throws IOException, ClassNotFoundException {
+    private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeInt(color.getRGB());
         out.writeInt(x);
         out.writeInt(y);

@@ -67,21 +67,25 @@ public class Frame extends JFrame {
         JRadioButtonMenuItem rectangleTool = new JRadioButtonMenuItem("Rectangle");
         JRadioButtonMenuItem circleTool = new JRadioButtonMenuItem("Circle");
         JRadioButtonMenuItem arcTool = new JRadioButtonMenuItem("Arc");
+        JRadioButtonMenuItem lineTool = new JRadioButtonMenuItem("Line");
 
         ButtonGroup shapeGroup = new ButtonGroup();
         shapeGroup.add(rectangleTool);
         shapeGroup.add(circleTool);
         shapeGroup.add(arcTool);
+        shapeGroup.add(lineTool);
 
         rectangleTool.setSelected(true);
 
         rectangleTool.addActionListener(e -> Overseer.setShape("Rectangle"));
         circleTool.addActionListener(e -> Overseer.setShape("Circle"));
         arcTool.addActionListener(e -> Overseer.setShape("Arc"));
+        lineTool.addActionListener(e -> Overseer.setShape("Line"));
 
         shapesMenu.add(rectangleTool);
         shapesMenu.add(circleTool);
         shapesMenu.add(arcTool);
+        shapesMenu.add(lineTool);
 
         return shapesMenu;
     }
