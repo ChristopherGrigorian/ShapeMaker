@@ -37,8 +37,21 @@ public class Frame extends JFrame {
 
     private void createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
+        menuBar.add(createShapesMenu());
+        menuBar.add(createColorsMenu());
+        menuBar.add(createEditMenu());
 
-        // Shape Menu
+        JMenu aboutMenu = new JMenu("About");
+        JMenuItem creditsMenuItem = new JMenuItem("Credits");
+        creditsMenuItem.addActionListener(e -> dialogBox());
+        aboutMenu.add(creditsMenuItem);
+
+        menuBar.add(aboutMenu);
+
+        setJMenuBar(menuBar);
+    }
+
+    private JMenu createShapesMenu() {
         JMenu shapesMenu = new JMenu("Shapes");
         JRadioButtonMenuItem rectangleTool = new JRadioButtonMenuItem("Rectangle");
         JRadioButtonMenuItem circleTool = new JRadioButtonMenuItem("Circle");
@@ -49,11 +62,8 @@ public class Frame extends JFrame {
         shapeGroup.add(circleTool);
         shapeGroup.add(arcTool);
 
-        // Set default shape to Rectangle
         rectangleTool.setSelected(true);
-        Overseer.setShape("Rectangle");
 
-        // Action listeners to set the tool in Overseer
         rectangleTool.addActionListener(e -> Overseer.setShape("Rectangle"));
         circleTool.addActionListener(e -> Overseer.setShape("Circle"));
         arcTool.addActionListener(e -> Overseer.setShape("Arc"));
@@ -62,7 +72,10 @@ public class Frame extends JFrame {
         shapesMenu.add(circleTool);
         shapesMenu.add(arcTool);
 
-        // Color Menu
+        return shapesMenu;
+    }
+
+    private JMenu createColorsMenu() {
         JMenu colorMenu = new JMenu("Color");
         JRadioButtonMenuItem blackColor = new JRadioButtonMenuItem("Black");
         JRadioButtonMenuItem redColor = new JRadioButtonMenuItem("Red");
@@ -77,9 +90,7 @@ public class Frame extends JFrame {
         colorGroup.add(greenColor);
         colorGroup.add(blueColor);
 
-        // Set default color to Black
         blackColor.setSelected(true);
-        Overseer.setColor(Color.BLACK);
 
         blackColor.addActionListener(e -> Overseer.setColor(Color.BLACK));
         redColor.addActionListener(e -> Overseer.setColor(Color.RED));
@@ -93,25 +104,16 @@ public class Frame extends JFrame {
         colorMenu.add(greenColor);
         colorMenu.add(blueColor);
 
-        // Add to menuBar
-        menuBar.add(shapesMenu);
-        menuBar.add(colorMenu);
-        menuBar.add(createEditMenu());
-
-        //Create about menu
-        menuBar.add(createAboutButton());
-
-        setJMenuBar(menuBar);
+        return colorMenu;
     }
 
+
     private JMenu createEditMenu() {
-        // Edit Menu for Undo/Redo
         JMenu editMenu = new JMenu("Edit");
         JMenuItem undoAction = new JMenuItem("Undo");
         JMenuItem redoAction = new JMenuItem("Redo");
         JMenuItem eraseAction = new JMenuItem("Erase");
 
-        // Action listeners for undo/redo actions
         undoAction.addActionListener(e -> {
             Overseer.popFromStack();
             Overseer.doSomething();
@@ -120,7 +122,6 @@ public class Frame extends JFrame {
             Overseer.redoToStack();
             Overseer.doSomething();
         });
-
         eraseAction.addActionListener(e -> {
             Overseer.clearStack();
             Overseer.doSomething();
@@ -131,16 +132,6 @@ public class Frame extends JFrame {
         editMenu.add(eraseAction);
 
         return editMenu;
-    }
-
-    private JButton createAboutButton() {
-        JButton button = new JButton("About");
-        button.setOpaque(true);
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
-        button.setFocusable(false);
-        button.addActionListener(e -> dialogBox());
-        return button;
     }
 
     private void dialogBox() {
@@ -155,7 +146,7 @@ public class Frame extends JFrame {
                 "@author ecan00 (Eric Canihuante)</html>");
 
         d.add(l);
-        d.setSize(300, 150);
+        d.setSize(400, 150);
         d.setVisible(true);
     }
 }
