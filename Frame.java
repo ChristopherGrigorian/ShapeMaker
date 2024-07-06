@@ -48,13 +48,13 @@ public class Frame extends JFrame {
         fileMenu.add(loadMenuItem);
         menuBar.add(fileMenu);
 
+        menuBar.add(createEditMenu());
         menuBar.add(createShapesMenu());
         menuBar.add(createColorsMenu());
-        menuBar.add(createEditMenu());
 
         // Create About Menu
-        JMenu aboutMenu = new JMenu("About");
-        JMenuItem creditsMenuItem = new JMenuItem("Credits");
+        JMenu aboutMenu = new JMenu("Help");
+        JMenuItem creditsMenuItem = new JMenuItem("About");
         creditsMenuItem.addActionListener(e -> dialogBox());
         aboutMenu.add(creditsMenuItem);
         menuBar.add(aboutMenu);
@@ -150,7 +150,7 @@ public class Frame extends JFrame {
 
     private void dialogBox() {
         // create a dialog Box
-        JDialog d = new JDialog(this, "Credits");
+        JDialog d = new JDialog(this, "About");
 
         JLabel l = new JLabel();
 
