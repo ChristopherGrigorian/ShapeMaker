@@ -37,15 +37,26 @@ public class Frame extends JFrame {
 
     private void createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
+
+        // Create File Menu
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem saveMenuItem = new JMenuItem("Save");
+        JMenuItem loadMenuItem = new JMenuItem("Load");
+        saveMenuItem.addActionListener(e -> Overseer.saveFile());
+        loadMenuItem.addActionListener(e -> Overseer.loadFile());
+        fileMenu.add(saveMenuItem);
+        fileMenu.add(loadMenuItem);
+        menuBar.add(fileMenu);
+
         menuBar.add(createShapesMenu());
         menuBar.add(createColorsMenu());
         menuBar.add(createEditMenu());
 
+        // Create About Menu
         JMenu aboutMenu = new JMenu("About");
         JMenuItem creditsMenuItem = new JMenuItem("Credits");
         creditsMenuItem.addActionListener(e -> dialogBox());
         aboutMenu.add(creditsMenuItem);
-
         menuBar.add(aboutMenu);
 
         setJMenuBar(menuBar);
@@ -107,7 +118,6 @@ public class Frame extends JFrame {
         return colorMenu;
     }
 
-
     private JMenu createEditMenu() {
         JMenu editMenu = new JMenu("Edit");
         JMenuItem undoAction = new JMenuItem("Undo");
@@ -136,13 +146,13 @@ public class Frame extends JFrame {
 
     private void dialogBox() {
         // create a dialog Box
-        JDialog d = new JDialog(this, "About us");
+        JDialog d = new JDialog(this, "Credits");
 
         JLabel l = new JLabel();
 
         l.setText("<html>@author christophergrigorian (Christopher Grigorian) <br>" +
-                "<html>@author CharlieRay668 (Charlie Ray) <br>" +
-                "<html>@author manualdriver (Harold Ellis) <br>" +
+                "@author CharlieRay668 (Charlie Ray) <br>" +
+                "@author manualdriver (Harold Ellis) <br>" +
                 "@author ecan00 (Eric Canihuante)</html>");
 
         d.add(l);

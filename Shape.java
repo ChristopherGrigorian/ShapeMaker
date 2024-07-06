@@ -10,6 +10,12 @@ public abstract class Shape {
     protected Color color;
     protected int x, y, w, h;
 
+    // This default constructor is necessary
+    // DO NOT DELETE D:<
+    public Shape() {
+
+    }
+
     public Shape(Color color, int x, int y, int w, int h) {
         this.color = color;
         this.x = x;

@@ -1,5 +1,7 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.*;
 import java.util.Stack;
 
 /**
@@ -86,5 +88,47 @@ public class Overseer {
 
     public static void setBox(Shape box) {
         Overseer.box = box;
+    }
+
+    public static void saveFile() {
+        String fileName = JOptionPane.showInputDialog(drawPanel, "Enter file name (without extension):", "Save File", JOptionPane.PLAIN_MESSAGE);
+        if (fileName != null) {
+            if (!fileName.endsWith(".ser")) {
+                fileName += ".ser";
+            }
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+                oos.writeObject(shapes);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(drawPanel, "Error saving file: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void loadFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Load File");
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Serialized Files", "ser");
+        fileChooser.setFileFilter(filter);
+
+        int userSelection = fileChooser.showOpenDialog(drawPanel);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileChooser.getSelectedFile()))) {
+                shapes.clear();
+                redoShapes.clear();
+                // I create the save file, so it is (at least I think so) okay to suppress this warning.
+                Stack<Shape> loadedShapes = (Stack<Shape>) ois.readObject();
+                shapes.addAll(loadedShapes);
+                doSomething();
+            } catch (IOException | ClassNotFoundException e) {
+                JOptionPane.showMessageDialog(drawPanel, "Error loading file: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+            System.out.println("Load operation canceled by user.");
+        } else if (userSelection == JFileChooser.ERROR_OPTION) {
+            System.err.println("Error in file chooser dialog.");
+        }
     }
 }
