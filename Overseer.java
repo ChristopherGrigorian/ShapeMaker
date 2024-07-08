@@ -17,6 +17,7 @@ public class Overseer {
     private static String shape;
     private static Shape box;
     private static boolean clearPerformed = false;
+    private static boolean savePerformed = false;
 
     public static JPanel getDrawPanel() {
         return drawPanel;
@@ -43,6 +44,7 @@ public class Overseer {
     }
 
     public static void doSomething() {
+        savePerformed = false;
         drawPanel.repaint();
     }
 
@@ -74,7 +76,7 @@ public class Overseer {
         }
     }
 
-    public static void clearStack() {
+    public static void eraseStack() {
         if (!shapes.isEmpty()) {
             redoShapes.addAll(shapes);
             clearPerformed = true;
@@ -90,14 +92,37 @@ public class Overseer {
         Overseer.box = box;
     }
 
-    public static void saveFile() {
-        String fileName = JOptionPane.showInputDialog(drawPanel, "Enter file name (without extension):", "Save File", JOptionPane.PLAIN_MESSAGE);
-        if (fileName != null) {
-            if (!fileName.endsWith(".ser")) {
-                fileName += ".ser";
+    public static void newFile() {
+        if (!savePerformed) {
+            int wantSave = JOptionPane.showConfirmDialog(drawPanel, "You have not saved this file. Would you like to save?", null, JOptionPane.YES_NO_OPTION);
+            if (wantSave == JOptionPane.YES_OPTION) {
+                saveFile();
+            } else if (wantSave == JOptionPane.NO_OPTION) {
+                shapes.clear();
+                redoShapes.clear();
+                doSomething();
             }
+        } else {
+            shapes.clear();
+            redoShapes.clear();
+            doSomething();
+        }
+    }
+
+    public static void saveFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save File");
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Serialized Files", "ser");
+        fileChooser.setFileFilter(filter);
+
+        int returnValue = fileChooser.showSaveDialog(drawPanel);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath() + ".ser";
+            File fileName = new File(filePath);
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
                 oos.writeObject(shapes);
+                savePerformed = true;
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(drawPanel, "Error saving file: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -115,7 +140,8 @@ public class Overseer {
         int userSelection = fileChooser.showOpenDialog(drawPanel);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileChooser.getSelectedFile()))) {
+            File fileName = fileChooser.getSelectedFile();
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
                 shapes.clear();
                 redoShapes.clear();
                 // I create the save file, so it is (at least I think so) okay to suppress this warning.

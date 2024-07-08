@@ -40,10 +40,13 @@ public class Frame extends JFrame {
 
         // Create File Menu
         JMenu fileMenu = new JMenu("File");
+        JMenuItem newMenuItem = new JMenuItem("New");
         JMenuItem saveMenuItem = new JMenuItem("Save");
         JMenuItem loadMenuItem = new JMenuItem("Load");
+        newMenuItem.addActionListener(e -> Overseer.newFile());
         saveMenuItem.addActionListener(e -> Overseer.saveFile());
         loadMenuItem.addActionListener(e -> Overseer.loadFile());
+        fileMenu.add(newMenuItem);
         fileMenu.add(saveMenuItem);
         fileMenu.add(loadMenuItem);
         menuBar.add(fileMenu);
@@ -137,7 +140,7 @@ public class Frame extends JFrame {
             Overseer.doSomething();
         });
         eraseAction.addActionListener(e -> {
-            Overseer.clearStack();
+            Overseer.eraseStack();
             Overseer.doSomething();
         });
 
