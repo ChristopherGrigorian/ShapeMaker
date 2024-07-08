@@ -16,6 +16,10 @@ public class Circle extends Shape implements Serializable {
     public void drawShape(Graphics g) {
         g.setColor(color);
         g.fillOval(x, y, w, h);
+        if (selected) {
+            g.setColor(Color.RED);
+            g.drawOval(x, y, w, h);
+        }
     }
 
     @Serial
@@ -35,6 +39,12 @@ public class Circle extends Shape implements Serializable {
         w = in.readInt();
         h = in.readInt();
     }
+
+    @Override
+    public boolean contains(int x, int y) {
+        return Math.pow(x - this.x - w / 2, 2) + Math.pow(y - this.y - h / 2, 2) <= Math.pow(w / 2, 2);
+    }
+
 }
 
 

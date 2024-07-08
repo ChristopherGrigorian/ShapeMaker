@@ -10,6 +10,8 @@ public abstract class Shape {
     protected Color color;
     protected int x, y, w, h;
 
+    protected boolean selected = false;
+
     // This default constructor is necessary
     // DO NOT DELETE D:<
     public Shape() {
@@ -23,6 +25,32 @@ public abstract class Shape {
         this.w = w;
         this.h = h;
     }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public boolean getSelected() {
+        return selected;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public abstract boolean contains(int x, int y);
 
     public abstract void drawShape(Graphics g);
 
