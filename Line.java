@@ -40,15 +40,39 @@ public class Line extends Shape implements Serializable {
 
     @Override
     public boolean contains(int x, int y) {
-        int slope = (this.h - this.y) / (this.w - this.x);
-        int yIntercept = this.y - slope * this.x;
-        int yCalc = slope * x + yIntercept;
-        return y >= yCalc - 3 && y <= yCalc + 3;
-//        return     x >= this.x - 3
-//                && x <= this.w + 3
-//                && y >= this.y - 3
-//                && y <= this.h + 3;
+        double distance = pointToLineDistance(this.x, this.y, this.w, this.h, x, y);
+        return distance <= 3.0;
     }
+
+    private double pointToLineDistance(int x1, int y1, int x2, int y2, int px, int py) {
+        double A = px - x1;
+        double B = py - y1;
+        double C = x2 - x1;
+        double D = y2 - y1;
+
+        double dot = A * C + B * D;
+        double len_sq = C * C + D * D;
+        double param = (len_sq != 0) ? dot / len_sq : -1;
+
+        double xx, yy;
+
+        if (param < 0) {
+            xx = x1;
+            yy = y1;
+        } else if (param > 1) {
+            xx = x2;
+            yy = y2;
+        } else {
+            xx = x1 + param * C;
+            yy = y1 + param * D;
+        }
+
+        double dx = px - xx;
+        double dy = py - yy;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+
 
     public void setW(int w) {
         this.w = w;
