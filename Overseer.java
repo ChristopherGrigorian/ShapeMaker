@@ -12,11 +12,11 @@ import java.util.Stack;
 public class Overseer {
     private static final Stack<Shape> shapes = new Stack<>();
     private static final Stack<Shape> redoShapes = new Stack<>();
+    private static final Stack<Shape> clearedShapes = new Stack<>();
     private static JPanel drawPanel;
     private static Color color;
     private static String shape;
     private static Shape box;
-    private static boolean clearPerformed = false;
     private static boolean savePerformed = false;
 
     public static JPanel getDrawPanel() {
@@ -60,32 +60,30 @@ public class Overseer {
 
     public static void pushToStack(Shape shape) {
         Overseer.shapes.add(shape);
-        Overseer.clearPerformed = false;
         Overseer.redoShapes.clear();
     }
 
-    public static void popFromStack() {
-        if (!shapes.isEmpty()) {
-            redoShapes.add(shapes.pop());
+    public static void undoFromStack() {
+        if (!clearedShapes.isEmpty()) {
+            shapes.addAll(clearedShapes);
+            clearedShapes.clear();
+        } else {
+            if (!shapes.isEmpty()) {
+                redoShapes.add(shapes.pop());
+            }
         }
     }
 
     public static void redoToStack() {
         if (!redoShapes.isEmpty()) {
-            if (!clearPerformed) {
-                Overseer.shapes.add(redoShapes.pop());
-            } else {
-                clearPerformed = false;
-                shapes.addAll(redoShapes);
-                redoShapes.clear();
-            }
+            Overseer.shapes.add(redoShapes.pop());
         }
     }
 
     public static void eraseStack() {
         if (!shapes.isEmpty()) {
-            redoShapes.addAll(shapes);
-            clearPerformed = true;
+            clearedShapes.addAll(shapes);
+            System.out.println(clearedShapes);
             shapes.clear();
         }
     }
@@ -99,19 +97,21 @@ public class Overseer {
     }
 
     public static void newFile() {
-        if (!savePerformed) {
-            int wantSave = JOptionPane.showConfirmDialog(drawPanel, "You have not saved this file. Would you like to save?", null, JOptionPane.YES_NO_OPTION);
-            if (wantSave == JOptionPane.YES_OPTION) {
-                saveFile();
-            } else if (wantSave == JOptionPane.NO_OPTION) {
+        if (!shapes.isEmpty() && !redoShapes.isEmpty()) {
+            if (!savePerformed) {
+                int wantSave = JOptionPane.showConfirmDialog(drawPanel, "You have not saved this file. Would you like to save?", null, JOptionPane.YES_NO_OPTION);
+                if (wantSave == JOptionPane.YES_OPTION) {
+                    saveFile();
+                } else if (wantSave == JOptionPane.NO_OPTION) {
+                    shapes.clear();
+                    redoShapes.clear();
+                    doSomething();
+                }
+            } else {
                 shapes.clear();
                 redoShapes.clear();
                 doSomething();
             }
-        } else {
-            shapes.clear();
-            redoShapes.clear();
-            doSomething();
         }
     }
 

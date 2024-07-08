@@ -132,7 +132,7 @@ public class Frame extends JFrame {
         JMenuItem eraseAction = new JMenuItem("Erase");
 
         undoAction.addActionListener(e -> {
-            Overseer.popFromStack();
+            Overseer.undoFromStack();
             Overseer.doSomething();
         });
         redoAction.addActionListener(e -> {
