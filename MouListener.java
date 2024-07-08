@@ -71,7 +71,7 @@ public class MouListener implements MouseListener, MouseMotionListener {
             int dx = e.getX() - xDragStart;
             int dy = e.getY() - yDragStart;
             for (Shape s : Overseer.getStack()) {
-                if (s.contains(xDragStart, yDragStart)) {
+                if (s.contains(xDragStart, yDragStart) && s.getSelected()) {
                     if (s instanceof Line) {
                         Line l = (Line) s;
                         l.setX(l.getX() + dx);
