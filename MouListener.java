@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -10,16 +11,29 @@ import java.awt.event.MouseMotionListener;
 public class MouListener implements MouseListener, MouseMotionListener {
     private int x1;
     private int y1;
+    private int xDragStart;
+    private int yDragStart;
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        int selectedX = e.getX();
+        int selectedY = e.getY();
+        for (int i = 0; i < Overseer.getStack().size(); i++) {
+            Shape s = Overseer.getStack().get(i);
+            if (s.contains(selectedX, selectedY)) {
+                s.setSelected(!s.getSelected());
+                Overseer.doSomething();
+                break;
+            }
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         x1 = e.getX();
         y1 = e.getY();
+        xDragStart = x1;
+        yDragStart = y1;
     }
 
     @Override

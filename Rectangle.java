@@ -16,6 +16,10 @@ public class Rectangle extends Shape implements Serializable {
     public void drawShape(Graphics g) {
         g.setColor(color);
         g.fillRect(x, y, w, h);
+        if (selected) {
+            g.setColor(Color.RED);
+            g.drawRect(x, y, w, h);
+        }
     }
 
     @Serial
@@ -34,5 +38,10 @@ public class Rectangle extends Shape implements Serializable {
         y = in.readInt();
         w = in.readInt();
         h = in.readInt();
+    }
+
+    @Override
+    public boolean contains(int x, int y) {
+        return x >= this.x && x <= this.x + w && y >= this.y && y <= this.y + h;
     }
 }

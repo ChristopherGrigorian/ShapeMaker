@@ -32,4 +32,10 @@ public class Line extends Shape implements Serializable {
         w = in.readInt();
         h = in.readInt();
     }
+
+    @Override
+    public boolean contains(int x, int y) {
+        return false;
+    }
+
 }
