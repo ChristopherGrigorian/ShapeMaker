@@ -13,6 +13,11 @@ public class Line extends Shape implements Serializable {
         g2d.setStroke(new BasicStroke(7));
         g2d.setColor(color);
         g2d.drawLine(x, y, w, h);
+        if (selected) {
+            g2d.setColor(Color.RED);
+            g2d.setStroke(new BasicStroke(1));
+            g2d.drawLine(x, y, w, h);
+        }
     }
 
     @Serial
@@ -35,7 +40,30 @@ public class Line extends Shape implements Serializable {
 
     @Override
     public boolean contains(int x, int y) {
-        return false;
+        int slope = (this.h - this.y) / (this.w - this.x);
+        int yIntercept = this.y - slope * this.x;
+        int yCalc = slope * x + yIntercept;
+        return y >= yCalc - 3 && y <= yCalc + 3;
+//        return     x >= this.x - 3
+//                && x <= this.w + 3
+//                && y >= this.y - 3
+//                && y <= this.h + 3;
+    }
+
+    public void setW(int w) {
+        this.w = w;
+    }
+
+    public void setH(int h) {
+        this.h = h;
+    }
+
+    public int getW() {
+        return w;
+    }
+
+    public int getH() {
+        return h;
     }
 
 }

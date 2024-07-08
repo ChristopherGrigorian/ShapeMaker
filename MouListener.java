@@ -11,8 +11,8 @@ import java.awt.event.MouseMotionListener;
 public class MouListener implements MouseListener, MouseMotionListener {
     private int x1;
     private int y1;
-    private int xDragStart;
-    private int yDragStart;
+    private int xDragStart = -1;
+    private int yDragStart = -1;
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -32,13 +32,27 @@ public class MouListener implements MouseListener, MouseMotionListener {
     public void mousePressed(MouseEvent e) {
         x1 = e.getX();
         y1 = e.getY();
-        xDragStart = x1;
-        yDragStart = y1;
+        boolean found = false;
+        for (int i = 0; i < Overseer.getStack().size(); i++) {
+            Shape s = Overseer.getStack().get(i);
+            if (s.contains(x1, y1)) {
+                xDragStart = x1;
+                yDragStart = y1;
+                found = true;
+            }
+        }
+        if (!found) {
+            xDragStart = yDragStart = -1;
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        shapeCalculation(e, false);
+        if (xDragStart != -1 && yDragStart != -1) {
+            xDragStart = yDragStart = -1;
+        } else {
+            shapeCalculation(e, false);
+        }
     }
 
     @Override
@@ -53,7 +67,29 @@ public class MouListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        shapeCalculation(e, true);
+        if (xDragStart != -1 && yDragStart != -1) {
+            int dx = e.getX() - xDragStart;
+            int dy = e.getY() - yDragStart;
+            for (Shape s : Overseer.getStack()) {
+                if (s.contains(xDragStart, yDragStart)) {
+                    if (s instanceof Line) {
+                        Line l = (Line) s;
+                        l.setX(l.getX() + dx);
+                        l.setY(l.getY() + dy);
+                        l.setW(l.getW() + dx);
+                        l.setH(l.getH() + dy);
+                    } else {
+                        s.setX(s.getX() + dx);
+                        s.setY(s.getY() + dy);
+                    }
+                }
+            }
+            xDragStart = e.getX();
+            yDragStart = e.getY();
+            Overseer.doSomething();
+        } else {
+            shapeCalculation(e, true);
+        }
     }
 
     @Override
