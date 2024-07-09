@@ -2,8 +2,13 @@ import java.awt.*;
 import java.io.*;
 
 /**
- * The Line class represents a drawable line.
- * It extends the Shape class and includes functionality to draw a filled line.
+ * The Line class represents a drawable Line shape. It extends the Shape class
+ * and includes functionality to draw a Line.
+ * Can be serialized for save and load functionality
+ *
+ * @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
+ * @author Christopher Grigorian (Base class and serializing)
+ * @author Eric Canihuante (Clone and Move)
  */
 
 public class Line extends Shape implements Serializable {
@@ -15,11 +20,13 @@ public class Line extends Shape implements Serializable {
     @Override
     public void drawShape(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(new BasicStroke(3));
+        g2d.setStroke(new BasicStroke(7));
         g2d.setColor(color);
         g2d.drawLine(x, y, w, h);
         if (selected) {
-            drawSelectionHighlight(g);
+            g2d.setColor(Color.MAGENTA);
+            g2d.setStroke(new BasicStroke(1));
+            g2d.drawLine(x, y, w, h);
         }
     }
 
@@ -79,13 +86,4 @@ public class Line extends Shape implements Serializable {
         this.w += dx;
         this.h += dy;
     }
-
-    @Override
-    public void drawSelectionHighlight(Graphics g) {
-        super.drawSelectionHighlight(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(new BasicStroke(1)); // Use the same stroke width as the line itself
-        g2d.drawLine(x, y, w, h);
-    }
-
 }

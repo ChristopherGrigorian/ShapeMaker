@@ -4,6 +4,10 @@ import java.io.*;
 /**
  * The Arc class represents a drawable arc shape. It extends the Shape class and includes
  * functionality to draw an arc either normally or flipped upside down.
+ * Can be serialized for save and load functionality
+ *
+ *  @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
+ *  @author Christopher Grigorian (Base class and serializing)
  */
 
 public class Arc extends Shape implements Serializable {
@@ -24,7 +28,8 @@ public class Arc extends Shape implements Serializable {
         int arcAngle = 180;
         g.fillArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
         if (selected) {
-            drawSelectionHighlight(g);
+            g.setColor(Color.MAGENTA);
+            g.drawArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
         }
     }
 
@@ -52,22 +57,12 @@ public class Arc extends Shape implements Serializable {
 
     @Override
     public boolean contains(int x, int y) {
-        int adjustedY = flip ? this.y - this.h : this.y;
-        return x >= this.x && x <= this.x + w && y >= adjustedY && y <= adjustedY + h * 2;
+        // This covers both states (flip and not flipped)
+        return x >= this.x && x <= this.x + w && y >= this.y && y <= this.y + h;
     }
 
     @Override
     public Shape clone() {
         return new Arc(this.color, this.x, this.y, this.w, this.h, this.flip);
-    }
-
-    @Override
-    public void drawSelectionHighlight(Graphics g) {
-        super.drawSelectionHighlight(g);
-        Graphics2D g2d = (Graphics2D) g;
-        int adjustedY = flip ? y - h : y;
-        g2d.drawArc(x, adjustedY, w, h * 2, startAngle, 180);
-        int centerY = adjustedY + h;
-        g2d.drawLine(x, centerY, x + w, centerY);
     }
 }

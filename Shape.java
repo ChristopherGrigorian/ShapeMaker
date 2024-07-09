@@ -7,6 +7,7 @@ import java.awt.*;
  * All children can be serialized for save and load functionality
  *
  * @author Christopher Grigorian (Base class and serializing)
+ * @author Eric Canihuante (Clone and Move)
  */
 
 public abstract class Shape {
@@ -37,14 +38,6 @@ public abstract class Shape {
         return selected;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public int getX() {
         return x;
     }
@@ -57,12 +50,6 @@ public abstract class Shape {
 
     public abstract void drawShape(Graphics g);
 
-    public void drawSelectionHighlight(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.CYAN);
-        g2d.setStroke(new BasicStroke(3)); // Use a thicker stroke for highlighting
-    }
-
     @Override
     public abstract Shape clone();
 
@@ -70,5 +57,4 @@ public abstract class Shape {
         this.x += dx;
         this.y += dy;
     }
-
 }

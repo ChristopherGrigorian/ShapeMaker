@@ -9,14 +9,10 @@ import java.awt.*;
  * @author CharlieRay668 (Charlie Ray)
  * @author manualdriver (Harold Ellis)
  * @author ecan00 (Eric Canihuante)
+ *
  */
 
 public class Frame extends JFrame {
-    private JMenuItem pasteMenuItem;  // Reference to the paste menu item
-    private JMenuItem undoMenuItem;   // Reference to the undo menu item
-    private JMenuItem redoMenuItem;   // Reference to the redo menu item
-    private JMenuItem copyMenuItem;   // Reference to the copy menu item
-
     public static void main(String[] args) {
         Frame app = new Frame();
         app.setSize(800, 600);
@@ -38,11 +34,6 @@ public class Frame extends JFrame {
 
         createMenuBar();
 
-        // Add listeners to Overseer
-        Overseer.addCopyListener(this::enablePasteMenuItem);
-        Overseer.addUndoRedoListener(this::updateUndoRedoMenuItems);
-        Overseer.addSelectionListener(this::updateCopyMenuItem);
-
         // Add KeyboardListener to the frame
         KeyboardListener kl = new KeyboardListener();
         addKeyListener(kl);
@@ -58,18 +49,12 @@ public class Frame extends JFrame {
         JMenuItem newMenuItem = new JMenuItem("New");
         JMenuItem saveMenuItem = new JMenuItem("Save");
         JMenuItem loadMenuItem = new JMenuItem("Load");
-        JMenuItem eraseAllMenuItem = new JMenuItem("Erase All");  // Move and rename the erase option
         newMenuItem.addActionListener(e -> Overseer.newFile());
         saveMenuItem.addActionListener(e -> Overseer.saveFile());
         loadMenuItem.addActionListener(e -> Overseer.loadFile());
-        eraseAllMenuItem.addActionListener(e -> {
-            Overseer.clearStack();
-            Overseer.doSomething();
-        });
         fileMenu.add(newMenuItem);
         fileMenu.add(saveMenuItem);
         fileMenu.add(loadMenuItem);
-        fileMenu.add(eraseAllMenuItem);  // Add the erase option to the file menu
         menuBar.add(fileMenu);
 
         menuBar.add(createEditMenu());
@@ -148,62 +133,50 @@ public class Frame extends JFrame {
 
     private JMenu createEditMenu() {
         JMenu editMenu = new JMenu("Edit");
-        undoMenuItem = new JMenuItem("Undo");
-        redoMenuItem = new JMenuItem("Redo");
-        copyMenuItem = new JMenuItem("Copy");
-        pasteMenuItem = new JMenuItem("Paste");  // Initialize paste menu item
+        JMenuItem undoAction = new JMenuItem("Undo");
+        JMenuItem redoAction = new JMenuItem("Redo");
+        JMenuItem eraseAction = new JMenuItem("Erase");
+        JMenuItem copyAction = new JMenuItem("Copy");
+        JMenuItem pasteAction = new JMenuItem("Paste");
 
-        undoMenuItem.addActionListener(e -> {
-            Overseer.popFromStack();
+        undoAction.addActionListener(e -> {
+            Overseer.undoFromStack();
             Overseer.doSomething();
         });
-        redoMenuItem.addActionListener(e -> {
+        redoAction.addActionListener(e -> {
             Overseer.redoToStack();
             Overseer.doSomething();
         });
-        copyMenuItem.addActionListener(e -> Overseer.copyShape());
-        pasteMenuItem.addActionListener(e -> Overseer.pasteShape());
+        eraseAction.addActionListener(e -> {
+            Overseer.eraseStack();
+            Overseer.doSomething();
+        });
 
-        pasteMenuItem.setEnabled(false);  // Initially disable the paste menu item
+        copyAction.addActionListener(e -> Overseer.copyShape());
+        pasteAction.addActionListener(e -> Overseer.pasteShape());
 
-        editMenu.add(undoMenuItem);
-        editMenu.add(redoMenuItem);
-        editMenu.add(copyMenuItem);
-        editMenu.add(pasteMenuItem);
-
-        updateUndoRedoMenuItems();  // Set initial state for undo and redo buttons
-        updateCopyMenuItem();       // Set initial state for copy button
+        editMenu.add(undoAction);
+        editMenu.add(redoAction);
+        editMenu.add(eraseAction);
+        editMenu.add(copyAction);
+        editMenu.add(pasteAction);
 
         return editMenu;
-    }
-
-    private void enablePasteMenuItem() {
-        pasteMenuItem.setEnabled(Overseer.hasCopiedShape());
-    }
-
-    private void updateUndoRedoMenuItems() {
-        undoMenuItem.setEnabled(!Overseer.getStack().isEmpty() || !Overseer.getClearedShapes().isEmpty());
-        redoMenuItem.setEnabled(!Overseer.getRedoStack().isEmpty() && !Overseer.wasLastActionEraseAll());
-    }
-
-    private void updateCopyMenuItem() {
-        copyMenuItem.setEnabled(Overseer.hasSelectedShape());
     }
 
     private void dialogBox() {
         // create a dialog Box
         JDialog d = new JDialog(this, "About");
 
-        JLabel l = new JLabel("<html><div style='text-align: center;'>"
-                + "@author christophergrigorian (Christopher Grigorian) <br>"
-                + "@author CharlieRay668 (Charlie Ray) <br>"
-                + "@author manualdriver (Harold Ellis) <br>"
-                + "@author ecan00 (Eric Canihuante)</div></html>", SwingConstants.CENTER);
+        JLabel l = new JLabel();
 
-        d.setLayout(new BorderLayout());
-        d.add(l, BorderLayout.CENTER);
+        l.setText("<html>@author christophergrigorian (Christopher Grigorian) <br>" +
+                "@author CharlieRay668 (Charlie Ray) <br>" +
+                "@author manualdriver (Harold Ellis) <br>" +
+                "@author ecan00 (Eric Canihuante)</html>");
+
+        d.add(l);
         d.setSize(400, 150);
-        d.setLocationRelativeTo(this); // Center the dialog relative to the frame
         d.setVisible(true);
     }
 }

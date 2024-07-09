@@ -4,6 +4,11 @@ import java.io.*;
 /**
  * The Circle class represents a drawable circle shape. It extends the Shape class
  * and includes functionality to draw a filled circle.
+ * Can be serialized for save and load functionality
+ *
+ *  @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
+ *  @author Christopher Grigorian (Base class and serializing)
+ *  @author Eric Canihuante (Clone)
  */
 
 public class Circle extends Shape implements Serializable {
@@ -17,7 +22,8 @@ public class Circle extends Shape implements Serializable {
         g.setColor(color);
         g.fillOval(x, y, w, h);
         if (selected) {
-            drawSelectionHighlight(g);
+            g.setColor(Color.MAGENTA);
+            g.drawOval(x, y, w, h);
         }
     }
 
@@ -41,21 +47,17 @@ public class Circle extends Shape implements Serializable {
 
     @Override
     public boolean contains(int x, int y) {
-        return Math.pow(x - this.x - w / 2, 2) + Math.pow(y - this.y - h / 2, 2) <= Math.pow(w / 2, 2);
+        int centerX = this.x + this.w / 2;
+        int centerY = this.y + this.h / 2;
+        int radius = this.w / 2;
+
+        return Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2) <= Math.pow(radius, 2);
     }
 
     @Override
     public Shape clone() {
         return new Circle(this.color, this.x, this.y, this.w, this.h);
     }
-
-    @Override
-    public void drawSelectionHighlight(Graphics g) {
-        super.drawSelectionHighlight(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawOval(x, y, w, h);
-    }
-
 }
 
 

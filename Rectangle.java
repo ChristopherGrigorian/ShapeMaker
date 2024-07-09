@@ -4,6 +4,11 @@ import java.io.*;
 /**
  * The Rectangle class represents a drawable rectangle shape.
  * It extends the Shape class and includes functionality to draw a filled rectangle.
+ * Can be serialized for save and load functionality
+ *
+ * @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
+ * @author Christopher Grigorian (Base class and serializing)
+ * @author Eric Canihuante (Clone)
  */
 
 public class Rectangle extends Shape implements Serializable {
@@ -17,7 +22,8 @@ public class Rectangle extends Shape implements Serializable {
         g.setColor(color);
         g.fillRect(x, y, w, h);
         if (selected) {
-            drawSelectionHighlight(g);
+            g.setColor(Color.MAGENTA);
+            g.drawRect(x, y, w, h);
         }
     }
 
@@ -47,12 +53,5 @@ public class Rectangle extends Shape implements Serializable {
     @Override
     public Shape clone() {
         return new Rectangle(this.color, this.x, this.y, this.w, this.h);
-    }
-
-    @Override
-    public void drawSelectionHighlight(Graphics g) {
-        super.drawSelectionHighlight(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawRect(x, y, w, h);
     }
 }
