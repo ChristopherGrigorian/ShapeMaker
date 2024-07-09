@@ -7,6 +7,7 @@ import java.awt.event.MouseMotionListener;
  * The MouListener class implements mouse listeners to handle mouse events
  * for drawing shapes in the application.
  * @author CharlieRay668 (Charlie Ray) (Wrote selection, drag, drop, and click functionality)
+ * @author christophergrigorian (Christopher Grigorian) (Shape calculation, pushing to stack and box, clean-up)
  */
 
 public class MouListener implements MouseListener, MouseMotionListener {
@@ -14,18 +15,21 @@ public class MouListener implements MouseListener, MouseMotionListener {
     private int y1;
     private int xDragStart = -1;
     private int yDragStart = -1;
+    private Shape currentShape;
 
     @Override
     public void mouseClicked(MouseEvent e) {
         int selectedX = e.getX();
         int selectedY = e.getY();
-        for (int i = 0; i < Overseer.getStack().size(); i++) {
-            Shape s = Overseer.getStack().get(i);
-            if (s.contains(selectedX, selectedY)) {
-                s.setSelected(!s.getSelected());
-                Overseer.doSomething();
-                break;
-            }
+        Shape s = findShape(selectedX, selectedY);
+        if (currentShape != null && currentShape != s) {
+            currentShape.setSelected(false);
+            Overseer.doSomething();
+        }
+        currentShape = s;
+        if (s != null) {
+            s.setSelected(!s.getSelected());
+            Overseer.doSomething();
         }
     }
 
@@ -33,17 +37,11 @@ public class MouListener implements MouseListener, MouseMotionListener {
     public void mousePressed(MouseEvent e) {
         x1 = e.getX();
         y1 = e.getY();
-        boolean found = false;
-        for (int i = 0; i < Overseer.getStack().size(); i++) {
-            Shape s = Overseer.getStack().get(i);
-            if (s.contains(x1, y1)) {
-                xDragStart = x1;
-                yDragStart = y1;
-                found = true;
-            }
-        }
-        if (!found) {
-            xDragStart = yDragStart = -1;
+        xDragStart = yDragStart = -1;
+        Shape s = findShape(x1, y1);
+        if (s != null) {
+            xDragStart = x1;
+            yDragStart = y1;
         }
     }
 
@@ -71,20 +69,19 @@ public class MouListener implements MouseListener, MouseMotionListener {
         if (xDragStart != -1 && yDragStart != -1) {
             int dx = e.getX() - xDragStart;
             int dy = e.getY() - yDragStart;
-            for (Shape s : Overseer.getStack()) {
-                if (s.contains(xDragStart, yDragStart) && s.getSelected()) {
-                    if (s instanceof Line) {
-                        Line l = (Line) s;
-                        l.setX(l.getX() + dx);
-                        l.setY(l.getY() + dy);
-                        l.setW(l.getW() + dx);
-                        l.setH(l.getH() + dy);
-                    } else {
-                        s.setX(s.getX() + dx);
-                        s.setY(s.getY() + dy);
-                    }
+
+            if (currentShape != null && currentShape.getSelected()) {
+                if (currentShape instanceof Line l) {
+                    l.setX(l.getX() + dx);
+                    l.setY(l.getY() + dy);
+                    l.setW(l.getW() + dx);
+                    l.setH(l.getH() + dy);
+                } else {
+                    currentShape.setX(currentShape.getX() + dx);
+                    currentShape.setY(currentShape.getY() + dy);
                 }
             }
+
             xDragStart = e.getX();
             yDragStart = e.getY();
             Overseer.doSomething();
@@ -98,6 +95,15 @@ public class MouListener implements MouseListener, MouseMotionListener {
 
     }
 
+    private Shape findShape(int x, int y) {
+        for (int i = Overseer.getStack().size() - 1; i >= 0; i--) {
+            Shape s = Overseer.getStack().get(i);
+            if (s.contains(x, y)) {
+                return s;
+            }
+        }
+        return null;
+    }
     private void shapeCalculation(MouseEvent e, boolean isDragging) {
         int x = Math.min(x1, e.getX());
         int y = Math.min(y1, e.getY());
