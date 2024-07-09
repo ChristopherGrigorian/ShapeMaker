@@ -25,7 +25,7 @@ public class Arc extends Shape implements Serializable {
         int arcAngle = 180;
         g.fillArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
         if (selected) {
-            g.setColor(Color.RED);
+            g.setColor(Color.MAGENTA);
             g.drawArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
         }
     }
@@ -54,10 +54,7 @@ public class Arc extends Shape implements Serializable {
 
     @Override
     public boolean contains(int x, int y) {
-        if (flip) {
-            return x >= this.x && x <= this.x + w && y >= this.y - h && y <= this.y;
-        } else {
-            return x >= this.x && x <= this.x + w && y >= this.y && y <= this.y + h;
-        }
+        // This covers both states (flip and not flipped)
+        return x >= this.x && x <= this.x + w && y >= this.y && y <= this.y + h;
     }
 }
