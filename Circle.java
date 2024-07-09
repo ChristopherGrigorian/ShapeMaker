@@ -4,7 +4,10 @@ import java.io.*;
 /**
  * The Circle class represents a drawable circle shape. It extends the Shape class
  * and includes functionality to draw a filled circle.
+ * Can be serialized for save and load functionality
+ *
  *  @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
+ *  @author Christopher Grigorian (Base class and serializing)
  */
 
 public class Circle extends Shape implements Serializable {

@@ -4,6 +4,9 @@ import java.awt.*;
  * The Shape class is an abstract base class representing a drawable shape.
  * It includes common properties like color and dimensions, and defines an abstract method
  * for drawing the shape on a Graphics object.
+ * All children can be serialized for save and load functionality
+ *
+ * @author Christopher Grigorian (Base class and serializing)
  */
 
 public abstract class Shape {

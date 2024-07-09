@@ -7,6 +7,8 @@ import java.util.Stack;
 /**
  * The Overseer class manages the state and operations related to drawing shapes in the application.
  * This class is essentially the "table" from lecture.
+ *
+ * @author Christopher Grigorian (Save and Load)
  */
 
 public class Overseer {

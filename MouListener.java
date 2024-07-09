@@ -6,8 +6,9 @@ import java.awt.event.MouseMotionListener;
 /**
  * The MouListener class implements mouse listeners to handle mouse events
  * for drawing shapes in the application.
+ *
  * @author CharlieRay668 (Charlie Ray) (Wrote selection, drag, drop, and click functionality)
- * @author christophergrigorian (Christopher Grigorian) (Shape calculation, pushing to stack and box, clean-up)
+ * @author Christopher Grigorian (Shape calculation, pushing to stack and box, clean-up)
  */
 
 public class MouListener implements MouseListener, MouseMotionListener {

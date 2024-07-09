@@ -1,11 +1,17 @@
 import java.awt.*;
 import java.io.*;
 
+/**
+ * The Line class represents a drawable Line shape. It extends the Shape class
+ * and includes functionality to draw a Line.
+ * Can be serialized for save and load functionality
+ *
+ * @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
+ * @author Christopher Grigorian (Base class and serializing)
+ */
+
 public class Line extends Shape implements Serializable {
 
-    /**
-     * @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
-     * */
     public Line(Color color, int x, int y, int w, int h) {
         super(color, x, y, w, h);
     }

@@ -4,7 +4,10 @@ import java.io.*;
 /**
  * The Rectangle class represents a drawable rectangle shape.
  * It extends the Shape class and includes functionality to draw a filled rectangle.
+ * Can be serialized for save and load functionality
+ *
  * @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
+ * @author Christopher Grigorian (Base class and serializing)
  */
 
 public class Rectangle extends Shape implements Serializable {
