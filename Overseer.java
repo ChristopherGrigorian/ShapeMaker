@@ -42,10 +42,8 @@ public class Overseer {
 
     public static void setColor(Color color) {
         Overseer.color = color;
-        for (Shape s : shapes) {
-            if (s.getSelected()) {
-                s.color = color;
-            }
+        if (selectedShape != null) {
+            selectedShape.color = color;
         }
         doSomething();
     }
