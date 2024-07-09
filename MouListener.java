@@ -38,6 +38,7 @@ public class MouListener implements MouseListener, MouseMotionListener {
         }
 
         Overseer.setSelectedShape(currentShape);
+
     }
 
     @Override

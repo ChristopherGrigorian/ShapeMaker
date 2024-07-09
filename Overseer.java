@@ -174,18 +174,18 @@ public class Overseer {
 
     public static void copyShape() {
         copiedShape = selectedShape;
+        resetPasteOffset();
     }
 
     public static void pasteShape() {
         if (copiedShape != null) {
             Shape newShape = copiedShape.clone();
             int newX, newY;
-            newX = selectedShape.getX() + pasteOffsetX;
-            newY = selectedShape.getY() + pasteOffsetY;
+            newX = copiedShape.getX() + pasteOffsetX;
+            newY = copiedShape.getY() + pasteOffsetY;
 
             newShape.move(newX - newShape.getX(), newY - newShape.getY());
             pushToStack(newShape);
-            setSelectedShape(newShape);
 
             if (pasteOffsetX > 800 || pasteOffsetY > 600) {
                 resetPasteOffset();
@@ -208,6 +208,5 @@ public class Overseer {
 
     public static void setSelectedShape(Shape selectedShape) {
         Overseer.selectedShape = selectedShape;
-        resetPasteOffset();
     }
 }
