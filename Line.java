@@ -3,6 +3,9 @@ import java.io.*;
 
 public class Line extends Shape implements Serializable {
 
+    /**
+     * @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
+     * */
     public Line(Color color, int x, int y, int w, int h) {
         super(color, x, y, w, h);
     }

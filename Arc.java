@@ -4,6 +4,7 @@ import java.io.*;
 /**
  * The Arc class represents a drawable arc shape. It extends the Shape class and includes
  * functionality to draw an arc either normally or flipped upside down.
+ *  @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
  */
 
 public class Arc extends Shape implements Serializable {
