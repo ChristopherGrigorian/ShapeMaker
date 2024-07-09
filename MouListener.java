@@ -5,6 +5,11 @@ import java.awt.event.MouseMotionListener;
 /**
  * The MouListener class implements mouse listeners to handle mouse events
  * for drawing shapes in the application.
+ * <p>
+ * NOTE: You must click to select something before dragging. All draws
+ * other than in the area of the selected shape will be considered as a normal draw
+ * and not a drag&drop so that shapes can still be drawn on top of one another
+ * without moving them.
  *
  * @author CharlieRay668 (Charlie Ray) (Wrote selection, drag, drop, and click functionality)
  * @author Christopher Grigorian (Shape calculation, pushing to stack and box, clean-up)
@@ -41,7 +46,7 @@ public class MouListener implements MouseListener, MouseMotionListener {
         y1 = e.getY();
         xDragStart = yDragStart = -1;
         Shape s = findShape(x1, y1);
-        if (s != null) {
+        if (s != null && s == currentShape) {
             xDragStart = x1;
             yDragStart = y1;
         }
