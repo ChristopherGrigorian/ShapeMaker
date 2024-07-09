@@ -90,7 +90,6 @@ public class Overseer {
     public static void eraseStack() {
         if (!shapes.isEmpty()) {
             clearedShapes.addAll(shapes);
-            System.out.println(clearedShapes);
             shapes.clear();
         }
     }
