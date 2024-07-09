@@ -97,7 +97,7 @@ public class Overseer {
     }
 
     public static void newFile() {
-        if (!shapes.isEmpty() && !redoShapes.isEmpty()) {
+        if (!shapes.isEmpty()) {
             if (!savePerformed) {
                 int wantSave = JOptionPane.showConfirmDialog(drawPanel, "You have not saved this file. Would you like to save?", null, JOptionPane.YES_NO_OPTION);
                 if (wantSave == JOptionPane.YES_OPTION) {
