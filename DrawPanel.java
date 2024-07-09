@@ -17,8 +17,8 @@ public class DrawPanel extends JPanel {
         for (Shape s : Overseer.getStack()) {
             s.drawShape(g);
         }
-        if (Overseer.getBox() != null) {
-            Overseer.getBox().drawShape(g);
+        if (Overseer.getSelectedShape() != null) {
+            Overseer.getSelectedShape().drawShape(g);
         }
     }
 }

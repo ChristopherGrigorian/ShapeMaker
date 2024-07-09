@@ -13,19 +13,22 @@ public class MouListener implements MouseListener, MouseMotionListener {
     private int y1;
     private int xDragStart = -1;
     private int yDragStart = -1;
+    private Shape draggingShape = null;
 
     @Override
     public void mouseClicked(MouseEvent e) {
         int selectedX = e.getX();
         int selectedY = e.getY();
-        for (int i = 0; i < Overseer.getStack().size(); i++) {
-            Shape s = Overseer.getStack().get(i);
+        Shape selectedShape = null;
+
+        for (Shape s : Overseer.getStack()) {
             if (s.contains(selectedX, selectedY)) {
-                s.setSelected(!s.getSelected());
-                Overseer.doSomething();
+                selectedShape = s;
                 break;
             }
         }
+
+        Overseer.setSelectedShape(selectedShape);
     }
 
     @Override
@@ -33,16 +36,21 @@ public class MouListener implements MouseListener, MouseMotionListener {
         x1 = e.getX();
         y1 = e.getY();
         boolean found = false;
-        for (int i = 0; i < Overseer.getStack().size(); i++) {
+        for (int i = Overseer.getStack().size() - 1; i >= 0; i--) {
             Shape s = Overseer.getStack().get(i);
             if (s.contains(x1, y1)) {
                 xDragStart = x1;
                 yDragStart = y1;
+                draggingShape = s;
+                Overseer.setSelectedShape(s);
                 found = true;
+                break;
             }
         }
         if (!found) {
             xDragStart = yDragStart = -1;
+            draggingShape = null;
+            Overseer.setSelectedShape(null);
         }
     }
 
@@ -50,6 +58,8 @@ public class MouListener implements MouseListener, MouseMotionListener {
     public void mouseReleased(MouseEvent e) {
         if (xDragStart != -1 && yDragStart != -1) {
             xDragStart = yDragStart = -1;
+        } else if (e.getX() == x1 && e.getY() == y1) {
+            Overseer.setSelectedShape(null);
         } else {
             shapeCalculation(e, false);
         }
@@ -70,20 +80,12 @@ public class MouListener implements MouseListener, MouseMotionListener {
         if (xDragStart != -1 && yDragStart != -1) {
             int dx = e.getX() - xDragStart;
             int dy = e.getY() - yDragStart;
-            for (Shape s : Overseer.getStack()) {
-                if (s.contains(xDragStart, yDragStart) && s.getSelected()) {
-                    if (s instanceof Line) {
-                        Line l = (Line) s;
-                        l.setX(l.getX() + dx);
-                        l.setY(l.getY() + dy);
-                        l.setW(l.getW() + dx);
-                        l.setH(l.getH() + dy);
-                    } else {
-                        s.setX(s.getX() + dx);
-                        s.setY(s.getY() + dy);
-                    }
-                }
+
+            Shape selectedShape = Overseer.getSelectedShape();
+            if (selectedShape != null) {
+                selectedShape.move(dx, dy);
             }
+
             xDragStart = e.getX();
             yDragStart = e.getY();
             Overseer.doSomething();
@@ -107,10 +109,10 @@ public class MouListener implements MouseListener, MouseMotionListener {
 
         if (isDragging) {
             switch (currentShape) {
-                case "Rectangle" -> Overseer.setBox(new Rectangle(Overseer.getColor(), x, y, w, h));
-                case "Circle" -> Overseer.setBox(new Circle(Overseer.getColor(), x, y, w, h));
-                case "Arc" -> Overseer.setBox(new Arc(Overseer.getColor(), x, y, w, h, flip));
-                case "Line" -> Overseer.setBox(new Line(Overseer.getColor(), x1, y1, e.getX(), e.getY()));
+                case "Rectangle" -> Overseer.setSelectedShape(new Rectangle(Overseer.getColor(), x, y, w, h));
+                case "Circle" -> Overseer.setSelectedShape(new Circle(Overseer.getColor(), x, y, w, h));
+                case "Arc" -> Overseer.setSelectedShape(new Arc(Overseer.getColor(), x, y, w, h, flip));
+                case "Line" -> Overseer.setSelectedShape(new Line(Overseer.getColor(), x1, y1, e.getX(), e.getY()));
             }
         } else {
             switch (currentShape) {
@@ -119,7 +121,7 @@ public class MouListener implements MouseListener, MouseMotionListener {
                 case "Arc" -> Overseer.pushToStack(new Arc(Overseer.getColor(), x, y, w, h, flip));
                 case "Line" -> Overseer.pushToStack(new Line(Overseer.getColor(), x1, y1, e.getX(), e.getY()));
             }
-            Overseer.setBox(null);
+            Overseer.setSelectedShape(null);
         }
         Overseer.doSomething();
     }

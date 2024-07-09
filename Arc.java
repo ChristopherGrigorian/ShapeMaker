@@ -24,8 +24,7 @@ public class Arc extends Shape implements Serializable {
         int arcAngle = 180;
         g.fillArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
         if (selected) {
-            g.setColor(Color.RED);
-            g.drawArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
+            drawSelectionHighlight(g);
         }
     }
 
@@ -53,10 +52,22 @@ public class Arc extends Shape implements Serializable {
 
     @Override
     public boolean contains(int x, int y) {
-        if (flip) {
-            return x >= this.x && x <= this.x + w && y >= this.y - h && y <= this.y;
-        } else {
-            return x >= this.x && x <= this.x + w && y >= this.y && y <= this.y + h;
-        }
+        int adjustedY = flip ? this.y - this.h : this.y;
+        return x >= this.x && x <= this.x + w && y >= adjustedY && y <= adjustedY + h * 2;
+    }
+
+    @Override
+    public Shape clone() {
+        return new Arc(this.color, this.x, this.y, this.w, this.h, this.flip);
+    }
+
+    @Override
+    public void drawSelectionHighlight(Graphics g) {
+        super.drawSelectionHighlight(g);
+        Graphics2D g2d = (Graphics2D) g;
+        int adjustedY = flip ? y - h : y;
+        g2d.drawArc(x, adjustedY, w, h * 2, startAngle, 180);
+        int centerY = adjustedY + h;
+        g2d.drawLine(x, centerY, x + w, centerY);
     }
 }

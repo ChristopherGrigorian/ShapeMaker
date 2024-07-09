@@ -17,8 +17,7 @@ public class Rectangle extends Shape implements Serializable {
         g.setColor(color);
         g.fillRect(x, y, w, h);
         if (selected) {
-            g.setColor(Color.RED);
-            g.drawRect(x, y, w, h);
+            drawSelectionHighlight(g);
         }
     }
 
@@ -43,5 +42,17 @@ public class Rectangle extends Shape implements Serializable {
     @Override
     public boolean contains(int x, int y) {
         return x >= this.x && x <= this.x + w && y >= this.y && y <= this.y + h;
+    }
+
+    @Override
+    public Shape clone() {
+        return new Rectangle(this.color, this.x, this.y, this.w, this.h);
+    }
+
+    @Override
+    public void drawSelectionHighlight(Graphics g) {
+        super.drawSelectionHighlight(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawRect(x, y, w, h);
     }
 }

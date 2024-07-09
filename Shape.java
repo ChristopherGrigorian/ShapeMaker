@@ -54,4 +54,18 @@ public abstract class Shape {
 
     public abstract void drawShape(Graphics g);
 
+    public void drawSelectionHighlight(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.CYAN);
+        g2d.setStroke(new BasicStroke(3)); // Use a thicker stroke for highlighting
+    }
+
+    @Override
+    public abstract Shape clone();
+
+    public void move(int dx, int dy) {
+        this.x += dx;
+        this.y += dy;
+    }
+
 }

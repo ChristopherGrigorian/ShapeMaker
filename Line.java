@@ -1,6 +1,11 @@
 import java.awt.*;
 import java.io.*;
 
+/**
+ * The Line class represents a drawable line.
+ * It extends the Shape class and includes functionality to draw a filled line.
+ */
+
 public class Line extends Shape implements Serializable {
 
     public Line(Color color, int x, int y, int w, int h) {
@@ -10,13 +15,11 @@ public class Line extends Shape implements Serializable {
     @Override
     public void drawShape(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(new BasicStroke(7));
+        g2d.setStroke(new BasicStroke(3));
         g2d.setColor(color);
         g2d.drawLine(x, y, w, h);
         if (selected) {
-            g2d.setColor(Color.RED);
-            g2d.setStroke(new BasicStroke(1));
-            g2d.drawLine(x, y, w, h);
+            drawSelectionHighlight(g);
         }
     }
 
@@ -40,54 +43,49 @@ public class Line extends Shape implements Serializable {
 
     @Override
     public boolean contains(int x, int y) {
-        double distance = pointToLineDistance(this.x, this.y, this.w, this.h, x, y);
-        return distance <= 3.0;
+        double distance = ptSegDist(this.x, this.y, this.w, this.h, x, y);
+        return distance <= 3;
     }
 
-    private double pointToLineDistance(int x1, int y1, int x2, int y2, int px, int py) {
-        double A = px - x1;
-        double B = py - y1;
-        double C = x2 - x1;
-        double D = y2 - y1;
-
-        double dot = A * C + B * D;
-        double len_sq = C * C + D * D;
-        double param = (len_sq != 0) ? dot / len_sq : -1;
-
-        double xx, yy;
-
-        if (param < 0) {
-            xx = x1;
-            yy = y1;
-        } else if (param > 1) {
-            xx = x2;
-            yy = y2;
+    private double ptSegDist(int x1, int y1, int x2, int y2, int px, int py) {
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+        double px1 = px - x1;
+        double py1 = py - y1;
+        double lengthSquared = dx * dx + dy * dy;
+        double projection = (px1 * dx + py1 * dy) / lengthSquared;
+        if (projection < 0) {
+            dx = px1;
+            dy = py1;
+        } else if (projection > 1) {
+            dx = px - x2;
+            dy = py - y2;
         } else {
-            xx = x1 + param * C;
-            yy = y1 + param * D;
+            dx = px1 - projection * dx;
+            dy = py1 - projection * dy;
         }
-
-        double dx = px - xx;
-        double dy = py - yy;
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-
-
-    public void setW(int w) {
-        this.w = w;
+    @Override
+    public Shape clone() {
+        return new Line(this.color, this.x, this.y, this.w, this.h);
     }
 
-    public void setH(int h) {
-        this.h = h;
+    @Override
+    public void move(int dx, int dy) {
+        this.x += dx;
+        this.y += dy;
+        this.w += dx;
+        this.h += dy;
     }
 
-    public int getW() {
-        return w;
-    }
-
-    public int getH() {
-        return h;
+    @Override
+    public void drawSelectionHighlight(Graphics g) {
+        super.drawSelectionHighlight(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(1)); // Use the same stroke width as the line itself
+        g2d.drawLine(x, y, w, h);
     }
 
 }

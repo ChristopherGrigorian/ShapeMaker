@@ -17,8 +17,7 @@ public class Circle extends Shape implements Serializable {
         g.setColor(color);
         g.fillOval(x, y, w, h);
         if (selected) {
-            g.setColor(Color.RED);
-            g.drawOval(x, y, w, h);
+            drawSelectionHighlight(g);
         }
     }
 
@@ -43,6 +42,18 @@ public class Circle extends Shape implements Serializable {
     @Override
     public boolean contains(int x, int y) {
         return Math.pow(x - this.x - w / 2, 2) + Math.pow(y - this.y - h / 2, 2) <= Math.pow(w / 2, 2);
+    }
+
+    @Override
+    public Shape clone() {
+        return new Circle(this.color, this.x, this.y, this.w, this.h);
+    }
+
+    @Override
+    public void drawSelectionHighlight(Graphics g) {
+        super.drawSelectionHighlight(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawOval(x, y, w, h);
     }
 
 }
