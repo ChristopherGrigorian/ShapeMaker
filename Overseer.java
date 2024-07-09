@@ -227,11 +227,16 @@ public class Overseer {
     }
 
     public static void saveFile() {
-        String fileName = JOptionPane.showInputDialog(drawPanel, "Enter file name (without extension):", "Save File", JOptionPane.PLAIN_MESSAGE);
-        if (fileName != null) {
-            if (!fileName.endsWith(".ser")) {
-                fileName += ".ser";
-            }
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save File");
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Serialized Files", "ser");
+        fileChooser.setFileFilter(filter);
+
+        int returnValue = fileChooser.showSaveDialog(drawPanel);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath() + ".ser";
+            File fileName = new File(filePath);
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
                 oos.writeObject(shapes);
                 savePerformed = true;
