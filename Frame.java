@@ -15,7 +15,7 @@ import java.awt.*;
 public class Frame extends JFrame {
     public static void main(String[] args) {
         Frame app = new Frame();
-        app.setSize(800, 600);
+        app.setSize(1200, 600);
         app.setTitle("My Paint App");
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.setResizable(false);
@@ -29,8 +29,14 @@ public class Frame extends JFrame {
         Overseer.getDrawPanel().addMouseListener(ml);
         Overseer.getDrawPanel().addMouseMotionListener(ml);
 
+        JPanel textPanel = new TextPanel();
+        // !! Overseer overseer = Overseer.getInstance();
+        // !! overseer.addPropertyChangeListener(textPanel);
+
+
         setLayout(new BorderLayout());
         add(drawPanel, BorderLayout.CENTER);
+        add(textPanel, BorderLayout.WEST);
 
         createMenuBar();
 
