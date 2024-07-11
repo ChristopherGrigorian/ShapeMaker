@@ -23,7 +23,7 @@ public class Rectangle extends Shape implements Serializable {
         g.fillRect(x, y, w, h);
         if (selected) {
             g.setColor(Color.MAGENTA);
-            g.drawRect(x, y, w, h);
+            g.drawRect(x, y, w-1, h-1);
         }
     }
 

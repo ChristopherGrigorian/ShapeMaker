@@ -11,7 +11,7 @@ import java.awt.event.MouseMotionListener;
  * and not a drag&drop so that shapes can still be drawn on top of one another
  * without moving them.
  *
- * @author CharlieRay668 (Charlie Ray) (Wrote selection, drag, drop, and click functionality)
+ * @author Charlie Ray (Wrote selection, drag, drop, and click functionality)
  * @author Christopher Grigorian (Shape calculation, pushing to stack and box, clean-up)
  */
 
@@ -24,21 +24,25 @@ public class MouListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        // Force reset selections
+        for (Shape s : Overseer.getInstance().getStack()) {
+            s.setSelected(false);
+        }
         int selectedX = e.getX();
         int selectedY = e.getY();
         Shape s = findShape(selectedX, selectedY);
         if (currentShape != null && currentShape != s) {
-            currentShape.setSelected(false);
+            currentShape.setSelected(!currentShape.getSelected());
             Overseer.getInstance().doSomething();
         }
-        currentShape = s;
         if (s != null) {
             s.setSelected(!s.getSelected());
-            Overseer.getInstance().doSomething();
+            currentShape = s;
+        } else {
+            currentShape = null;
         }
-
         Overseer.getInstance().setSelectedShape(currentShape);
-
+        Overseer.getInstance().doSomething();
     }
 
     @Override
@@ -46,8 +50,8 @@ public class MouListener implements MouseListener, MouseMotionListener {
         x1 = e.getX();
         y1 = e.getY();
         xDragStart = yDragStart = -1;
-        Shape s = findShape(x1, y1);
-        if (s != null && s == currentShape) {
+        currentShape = findShape(x1, y1);
+        if (currentShape != null) {
             xDragStart = x1;
             yDragStart = y1;
         }
@@ -57,8 +61,8 @@ public class MouListener implements MouseListener, MouseMotionListener {
     public void mouseReleased(MouseEvent e) {
         if (xDragStart != -1 && yDragStart != -1) {
             xDragStart = yDragStart = -1;
-        } else if (e.getX() == x1 && e.getY() == y1) {
-            Overseer.getInstance().setSelectedShape(null);
+//        } else if (e.getX() == x1 && e.getY() == y1) {
+//            Overseer.getInstance().setSelectedShape(null);
         } else {
             shapeCalculation(e, false);
         }
@@ -80,15 +84,14 @@ public class MouListener implements MouseListener, MouseMotionListener {
             int dx = e.getX() - xDragStart;
             int dy = e.getY() - yDragStart;
 
-            Shape selectedShape = Overseer.getInstance().getSelectedShape();
-            if (selectedShape != null) {
-                selectedShape.move(dx, dy);
+            if (currentShape != null) {
+                currentShape.move(dx, dy);
             }
 
             xDragStart = e.getX();
             yDragStart = e.getY();
             Overseer.getInstance().doSomething();
-        } else {
+        } else if (currentShape == null) {
             shapeCalculation(e, true);
         }
     }
@@ -107,6 +110,7 @@ public class MouListener implements MouseListener, MouseMotionListener {
         }
         return null;
     }
+
     private void shapeCalculation(MouseEvent e, boolean isDragging) {
         int x = Math.min(x1, e.getX());
         int y = Math.min(y1, e.getY());
@@ -114,16 +118,16 @@ public class MouListener implements MouseListener, MouseMotionListener {
         int h = Math.abs(e.getY() - y1);
         boolean flip = e.getY() > y1; // Determine if arc should flip
         Overseer overseer = Overseer.getInstance();
-        String currentShape = overseer.getShape();
+        String currentShapeType = overseer.getShape();
         if (isDragging) {
-            switch (currentShape) {
+            switch (currentShapeType) {
                 case "Rectangle" -> overseer.setBox(new Rectangle(overseer.getColor(), x, y, w, h));
                 case "Circle" -> overseer.setBox(new Circle(overseer.getColor(), x, y, w, h));
                 case "Arc" -> overseer.setBox(new Arc(overseer.getColor(), x, y, w, h, flip));
                 case "Line" -> overseer.setBox(new Line(overseer.getColor(), x1, y1, e.getX(), e.getY()));
             }
         } else {
-            switch (currentShape) {
+            switch (currentShapeType) {
                 case "Rectangle" -> overseer.pushToStack(new Rectangle(overseer.getColor(), x, y, w, h));
                 case "Circle" -> overseer.pushToStack(new Circle(overseer.getColor(), x, y, w, h));
                 case "Arc" -> overseer.pushToStack(new Arc(overseer.getColor(), x, y, w, h, flip));
