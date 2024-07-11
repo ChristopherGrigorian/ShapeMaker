@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.util.Stack;
 
@@ -12,7 +13,7 @@ import java.util.Stack;
  * @author Eric Canihuante (Copy and Paste)
  */
 
-public class Overseer {
+public class Overseer /*extends PropertyChangeSupport */ {
     private static final Stack<Shape> shapes = new Stack<>();
     private static final Stack<Shape> redoShapes = new Stack<>();
     private static final Stack<Shape> clearedShapes = new Stack<>();
@@ -27,6 +28,8 @@ public class Overseer {
     private static Shape selectedShape;
     private static int pasteOffsetX = 10;
     private static int pasteOffsetY = 10;
+
+
 
     public static JPanel getDrawPanel() {
         return drawPanel;
@@ -56,8 +59,13 @@ public class Overseer {
         Overseer.shape = shape;
     }
 
+    public static Stack<Shape> getShapeStack() {
+        return shapes;
+    }
+
     public static void doSomething() {
         savePerformed = false;
+        // !! firePropertyChange("shapeChanges", null, shapes);
         drawPanel.repaint();
     }
 
@@ -101,8 +109,6 @@ public class Overseer {
     public static void setBox(Shape box) {
         Overseer.box = box;
     }
-
-
 
     public static void newFile() {
         if (!shapes.isEmpty()) {
