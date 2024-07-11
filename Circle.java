@@ -68,7 +68,7 @@ public class Circle extends Shape implements Serializable {
                 "\ty = " + y + "\n" +
                 "\twidth = " + w + "\n" +
                 "\theight = " + h + "\n" +
-                ">";
+                ">\n";
     }
 }
 
