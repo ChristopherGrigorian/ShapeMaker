@@ -54,4 +54,15 @@ public class Rectangle extends Shape implements Serializable {
     public Shape clone() {
         return new Rectangle(this.color, this.x, this.y, this.w, this.h);
     }
+
+    @Override
+    public String toString() {
+        return "<Rectangle\n" +
+                "\tcolor=" + color + "\n" +
+                "\tx = " + x + "\n" +
+                "\ty = " + y + "\n" +
+                "\twidth = " + w + "\n" +
+                "\theight = " + h + "\n" +
+                ">";
+    }
 }

@@ -65,4 +65,15 @@ public class Arc extends Shape implements Serializable {
     public Shape clone() {
         return new Arc(this.color, this.x, this.y, this.w, this.h, this.flip);
     }
+
+    @Override
+    public String toString() {
+        return "<Arc\n" +
+                "\tcolor=" + color + "\n" +
+                "\tx = " + x + "\n" +
+                "\ty = " + y + "\n" +
+                "\twidth = " + w + "\n" +
+                "\theight = " + h + "\n" +
+                ">";
+    }
 }
