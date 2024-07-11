@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.util.Stack;
@@ -14,8 +15,9 @@ import java.util.Stack;
  * @author Charlie Ray (Singleton)
  */
 
-public class Overseer extends PropertyChangeSupport {
+public class Overseer /* I can't extend PropertyChangeSupport, and also be a singleton- CR*/{
     private static Overseer instance;
+    private final PropertyChangeSupport pcs;
 
     private static final Stack<Shape> shapes = new Stack<>();
     private static final Stack<Shape> redoShapes = new Stack<>();
@@ -31,7 +33,7 @@ public class Overseer extends PropertyChangeSupport {
     private static int pasteOffsetX = 10;
     private static int pasteOffsetY = 10;
     private Overseer() {
-        super(new Object());
+        pcs = new PropertyChangeSupport(this);
     }
 
     public static Overseer getInstance() {
@@ -39,6 +41,14 @@ public class Overseer extends PropertyChangeSupport {
             instance = new Overseer();
         }
         return instance;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
     }
 
     public JPanel getDrawPanel() {
@@ -75,7 +85,7 @@ public class Overseer extends PropertyChangeSupport {
 
     public void doSomething() {
         savePerformed = false;
-        // !! firePropertyChange("shapeChanges", null, shapes);
+        pcs.firePropertyChange("shapeChanges", null, shapes);
         drawPanel.repaint();
     }
 

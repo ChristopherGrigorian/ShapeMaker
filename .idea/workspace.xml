@@ -5,23 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="45b89580-cfef-4b6d-91cd-7ac0c9273e91" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drawappplease.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Arc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Circle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DrawPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DrawPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KeyboardListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/KeyboardListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Line.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MouListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MouListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Overseer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Overseer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Shape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TextPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Overseer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Overseer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TextPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TextPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
