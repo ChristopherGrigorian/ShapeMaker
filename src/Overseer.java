@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.util.Stack;
 
@@ -29,7 +30,9 @@ public class Overseer extends PropertyChangeSupport {
     private static Shape selectedShape;
     private static int pasteOffsetX = 10;
     private static int pasteOffsetY = 10;
-    private Overseer() {}
+    private Overseer() {
+        super(new Object());
+    }
 
     public static Overseer getInstance() {
         if (instance == null) {

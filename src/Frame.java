@@ -24,14 +24,12 @@ public class Frame extends JFrame {
 
     public Frame() {
         JPanel drawPanel = new DrawPanel();
-
+        Overseer overseer = Overseer.getInstance();
         overseer.setDrawPanel(drawPanel);
         MouListener ml = new MouListener();
-
-        Overseer overseer = Overseer.getInstance();
         overseer.getDrawPanel().addMouseListener(ml);
         overseer.getDrawPanel().addMouseMotionListener(ml);
-        JPanel textPanel = new TextPanel();
+        TextPanel textPanel = new TextPanel();
         overseer.addPropertyChangeListener(textPanel);
 
 
