@@ -8,6 +8,7 @@ import java.awt.*;
  *
  * @author Christopher Grigorian (Base class and serializing)
  * @author Eric Canihuante (Clone and Move)
+ *
  */
 
 public abstract class Shape {

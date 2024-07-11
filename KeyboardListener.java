@@ -15,11 +15,12 @@ public class KeyboardListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        Overseer overseer = Overseer.getInstance();
         if ((e.getKeyCode() == KeyEvent.VK_C) && ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            Overseer.copyShape();
+            overseer.copyShape();
         }
         if ((e.getKeyCode() == KeyEvent.VK_V) && ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0)) {
-            Overseer.pasteShape();
+            overseer.pasteShape();
         }
     }
 

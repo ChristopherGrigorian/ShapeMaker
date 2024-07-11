@@ -32,8 +32,6 @@ public class TextPanel extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Stack<Shape> shapes = ((Overseer) evt.getSource()).getShapeStack();
-
-
         for (Shape shape : shapes) {
             appendText(shape.toString());
         }
