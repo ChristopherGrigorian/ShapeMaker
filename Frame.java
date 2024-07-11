@@ -24,14 +24,15 @@ public class Frame extends JFrame {
 
     public Frame() {
         JPanel drawPanel = new DrawPanel();
-        Overseer.setDrawPanel(drawPanel);
-        MouListener ml = new MouListener();
-        Overseer.getDrawPanel().addMouseListener(ml);
-        Overseer.getDrawPanel().addMouseMotionListener(ml);
 
+        overseer.setDrawPanel(drawPanel);
+        MouListener ml = new MouListener();
+
+        Overseer overseer = Overseer.getInstance();
+        overseer.getDrawPanel().addMouseListener(ml);
+        overseer.getDrawPanel().addMouseMotionListener(ml);
         JPanel textPanel = new TextPanel();
-        // !! Overseer overseer = Overseer.getInstance();
-        // !! overseer.addPropertyChangeListener(textPanel);
+        overseer.addPropertyChangeListener(textPanel);
 
 
         setLayout(new BorderLayout());
@@ -49,15 +50,15 @@ public class Frame extends JFrame {
 
     private void createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-
         // Create File Menu
         JMenu fileMenu = new JMenu("File");
         JMenuItem newMenuItem = new JMenuItem("New");
         JMenuItem saveMenuItem = new JMenuItem("Save");
         JMenuItem loadMenuItem = new JMenuItem("Load");
-        newMenuItem.addActionListener(e -> Overseer.newFile());
-        saveMenuItem.addActionListener(e -> Overseer.saveFile());
-        loadMenuItem.addActionListener(e -> Overseer.loadFile());
+        Overseer overseer = Overseer.getInstance();
+        newMenuItem.addActionListener(e -> overseer.newFile());
+        saveMenuItem.addActionListener(e -> overseer.saveFile());
+        loadMenuItem.addActionListener(e -> overseer.loadFile());
         fileMenu.add(newMenuItem);
         fileMenu.add(saveMenuItem);
         fileMenu.add(loadMenuItem);
@@ -92,10 +93,11 @@ public class Frame extends JFrame {
 
         rectangleTool.setSelected(true);
 
-        rectangleTool.addActionListener(e -> Overseer.setShape("Rectangle"));
-        circleTool.addActionListener(e -> Overseer.setShape("Circle"));
-        arcTool.addActionListener(e -> Overseer.setShape("Arc"));
-        lineTool.addActionListener(e -> Overseer.setShape("Line"));
+        Overseer overseer = Overseer.getInstance();
+        rectangleTool.addActionListener(e -> overseer.setShape("Rectangle"));
+        circleTool.addActionListener(e -> overseer.setShape("Circle"));
+        arcTool.addActionListener(e -> overseer.setShape("Arc"));
+        lineTool.addActionListener(e -> overseer.setShape("Line"));
 
         shapesMenu.add(rectangleTool);
         shapesMenu.add(circleTool);
@@ -122,11 +124,12 @@ public class Frame extends JFrame {
 
         blackColor.setSelected(true);
 
-        blackColor.addActionListener(e -> Overseer.setColor(Color.BLACK));
-        redColor.addActionListener(e -> Overseer.setColor(Color.RED));
-        yellowColor.addActionListener(e -> Overseer.setColor(Color.YELLOW));
-        greenColor.addActionListener(e -> Overseer.setColor(Color.GREEN));
-        blueColor.addActionListener(e -> Overseer.setColor(Color.BLUE));
+        Overseer overseer = Overseer.getInstance();
+        blackColor.addActionListener(e -> overseer.setColor(Color.BLACK));
+        redColor.addActionListener(e -> overseer.setColor(Color.RED));
+        yellowColor.addActionListener(e -> overseer.setColor(Color.YELLOW));
+        greenColor.addActionListener(e -> overseer.setColor(Color.GREEN));
+        blueColor.addActionListener(e -> overseer.setColor(Color.BLUE));
 
         colorMenu.add(blackColor);
         colorMenu.add(redColor);
@@ -145,21 +148,22 @@ public class Frame extends JFrame {
         JMenuItem copyAction = new JMenuItem("Copy");
         JMenuItem pasteAction = new JMenuItem("Paste");
 
+        Overseer overseer = Overseer.getInstance();
         undoAction.addActionListener(e -> {
-            Overseer.undoFromStack();
-            Overseer.doSomething();
+            overseer.undoFromStack();
+            overseer.doSomething();
         });
         redoAction.addActionListener(e -> {
-            Overseer.redoToStack();
-            Overseer.doSomething();
+            overseer.redoToStack();
+            overseer.doSomething();
         });
         eraseAction.addActionListener(e -> {
-            Overseer.eraseStack();
-            Overseer.doSomething();
+            overseer.eraseStack();
+            overseer.doSomething();
         });
 
-        copyAction.addActionListener(e -> Overseer.copyShape());
-        pasteAction.addActionListener(e -> Overseer.pasteShape());
+        copyAction.addActionListener(e -> overseer.copyShape());
+        pasteAction.addActionListener(e -> overseer.pasteShape());
 
         editMenu.add(undoAction);
         editMenu.add(redoAction);

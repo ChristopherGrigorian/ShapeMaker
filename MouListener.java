@@ -29,15 +29,15 @@ public class MouListener implements MouseListener, MouseMotionListener {
         Shape s = findShape(selectedX, selectedY);
         if (currentShape != null && currentShape != s) {
             currentShape.setSelected(false);
-            Overseer.doSomething();
+            Overseer.getInstance().doSomething();
         }
         currentShape = s;
         if (s != null) {
             s.setSelected(!s.getSelected());
-            Overseer.doSomething();
+            Overseer.getInstance().doSomething();
         }
 
-        Overseer.setSelectedShape(currentShape);
+        Overseer.getInstance().setSelectedShape(currentShape);
 
     }
 
@@ -58,7 +58,7 @@ public class MouListener implements MouseListener, MouseMotionListener {
         if (xDragStart != -1 && yDragStart != -1) {
             xDragStart = yDragStart = -1;
         } else if (e.getX() == x1 && e.getY() == y1) {
-            Overseer.setSelectedShape(null);
+            Overseer.getInstance().setSelectedShape(null);
         } else {
             shapeCalculation(e, false);
         }
@@ -80,14 +80,14 @@ public class MouListener implements MouseListener, MouseMotionListener {
             int dx = e.getX() - xDragStart;
             int dy = e.getY() - yDragStart;
 
-            Shape selectedShape = Overseer.getSelectedShape();
+            Shape selectedShape = Overseer.getInstance().getSelectedShape();
             if (selectedShape != null) {
                 selectedShape.move(dx, dy);
             }
 
             xDragStart = e.getX();
             yDragStart = e.getY();
-            Overseer.doSomething();
+            Overseer.getInstance().doSomething();
         } else {
             shapeCalculation(e, true);
         }
@@ -99,8 +99,8 @@ public class MouListener implements MouseListener, MouseMotionListener {
     }
 
     private Shape findShape(int x, int y) {
-        for (int i = Overseer.getStack().size() - 1; i >= 0; i--) {
-            Shape s = Overseer.getStack().get(i);
+        for (int i = Overseer.getInstance().getStack().size() - 1; i >= 0; i--) {
+            Shape s = Overseer.getInstance().getStack().get(i);
             if (s.contains(x, y)) {
                 return s;
             }
@@ -113,24 +113,24 @@ public class MouListener implements MouseListener, MouseMotionListener {
         int w = Math.abs(e.getX() - x1);
         int h = Math.abs(e.getY() - y1);
         boolean flip = e.getY() > y1; // Determine if arc should flip
-        String currentShape = Overseer.getShape();
-
+        Overseer overseer = Overseer.getInstance();
+        String currentShape = overseer.getShape();
         if (isDragging) {
             switch (currentShape) {
-                case "Rectangle" -> Overseer.setBox(new Rectangle(Overseer.getColor(), x, y, w, h));
-                case "Circle" -> Overseer.setBox(new Circle(Overseer.getColor(), x, y, w, h));
-                case "Arc" -> Overseer.setBox(new Arc(Overseer.getColor(), x, y, w, h, flip));
-                case "Line" -> Overseer.setBox(new Line(Overseer.getColor(), x1, y1, e.getX(), e.getY()));
+                case "Rectangle" -> overseer.setBox(new Rectangle(overseer.getColor(), x, y, w, h));
+                case "Circle" -> overseer.setBox(new Circle(overseer.getColor(), x, y, w, h));
+                case "Arc" -> overseer.setBox(new Arc(overseer.getColor(), x, y, w, h, flip));
+                case "Line" -> overseer.setBox(new Line(overseer.getColor(), x1, y1, e.getX(), e.getY()));
             }
         } else {
             switch (currentShape) {
-                case "Rectangle" -> Overseer.pushToStack(new Rectangle(Overseer.getColor(), x, y, w, h));
-                case "Circle" -> Overseer.pushToStack(new Circle(Overseer.getColor(), x, y, w, h));
-                case "Arc" -> Overseer.pushToStack(new Arc(Overseer.getColor(), x, y, w, h, flip));
-                case "Line" -> Overseer.pushToStack(new Line(Overseer.getColor(), x1, y1, e.getX(), e.getY()));
+                case "Rectangle" -> overseer.pushToStack(new Rectangle(overseer.getColor(), x, y, w, h));
+                case "Circle" -> overseer.pushToStack(new Circle(overseer.getColor(), x, y, w, h));
+                case "Arc" -> overseer.pushToStack(new Arc(overseer.getColor(), x, y, w, h, flip));
+                case "Line" -> overseer.pushToStack(new Line(overseer.getColor(), x1, y1, e.getX(), e.getY()));
             }
-            Overseer.setBox(null);
+            overseer.setBox(null);
         }
-        Overseer.doSomething();
+        overseer.doSomething();
     }
 }

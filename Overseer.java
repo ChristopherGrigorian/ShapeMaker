@@ -1,7 +1,6 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.util.Stack;
 
@@ -11,9 +10,12 @@ import java.util.Stack;
  *
  * @author Christopher Grigorian (Save and Load)
  * @author Eric Canihuante (Copy and Paste)
+ * @author Charlie Ray (Singleton)
  */
 
-public class Overseer /*extends PropertyChangeSupport */ {
+public class Overseer extends PropertyChangeSupport {
+    private static Overseer instance;
+
     private static final Stack<Shape> shapes = new Stack<>();
     private static final Stack<Shape> redoShapes = new Stack<>();
     private static final Stack<Shape> clearedShapes = new Stack<>();
@@ -23,27 +25,32 @@ public class Overseer /*extends PropertyChangeSupport */ {
     private static Shape box;
     private static boolean savePerformed = false;
 
-
     private static Shape copiedShape;
     private static Shape selectedShape;
     private static int pasteOffsetX = 10;
     private static int pasteOffsetY = 10;
+    private Overseer() {}
 
+    public static Overseer getInstance() {
+        if (instance == null) {
+            instance = new Overseer();
+        }
+        return instance;
+    }
 
-
-    public static JPanel getDrawPanel() {
+    public JPanel getDrawPanel() {
         return drawPanel;
     }
 
-    public static void setDrawPanel(JPanel drawPanel) {
+    public void setDrawPanel(JPanel drawPanel) {
         Overseer.drawPanel = drawPanel;
     }
 
-    public static Color getColor() {
-        return color==null?Color.black:color;
+    public Color getColor() {
+        return color == null ? Color.black : color;
     }
 
-    public static void setColor(Color color) {
+    public void setColor(Color color) {
         Overseer.color = color;
         if (selectedShape != null) {
             selectedShape.color = color;
@@ -51,34 +58,34 @@ public class Overseer /*extends PropertyChangeSupport */ {
         doSomething();
     }
 
-    public static String getShape() {
-        return shape==null?"Rectangle":shape;
+    public String getShape() {
+        return shape == null ? "Rectangle" : shape;
     }
 
-    public static void setShape(String shape) {
+    public void setShape(String shape) {
         Overseer.shape = shape;
     }
 
-    public static Stack<Shape> getShapeStack() {
+    public Stack<Shape> getShapeStack() {
         return shapes;
     }
 
-    public static void doSomething() {
+    public void doSomething() {
         savePerformed = false;
         // !! firePropertyChange("shapeChanges", null, shapes);
         drawPanel.repaint();
     }
 
-    public static Stack<Shape> getStack() {
+    public Stack<Shape> getStack() {
         return shapes;
     }
 
-    public static void pushToStack(Shape shape) {
+    public void pushToStack(Shape shape) {
         Overseer.shapes.add(shape);
         Overseer.redoShapes.clear();
     }
 
-    public static void undoFromStack() {
+    public void undoFromStack() {
         if (!clearedShapes.isEmpty()) {
             shapes.addAll(clearedShapes);
             clearedShapes.clear();
@@ -89,28 +96,28 @@ public class Overseer /*extends PropertyChangeSupport */ {
         }
     }
 
-    public static void redoToStack() {
+    public void redoToStack() {
         if (!redoShapes.isEmpty()) {
             Overseer.shapes.add(redoShapes.pop());
         }
     }
 
-    public static void eraseStack() {
+    public void eraseStack() {
         if (!shapes.isEmpty()) {
             clearedShapes.addAll(shapes);
             shapes.clear();
         }
     }
 
-    public static Shape getBox() {
+    public Shape getBox() {
         return box;
     }
 
-    public static void setBox(Shape box) {
+    public void setBox(Shape box) {
         Overseer.box = box;
     }
 
-    public static void newFile() {
+    public void newFile() {
         if (!shapes.isEmpty()) {
             if (!savePerformed) {
                 int wantSave = JOptionPane.showConfirmDialog(drawPanel, "You have not saved this file. Would you like to save?", null, JOptionPane.YES_NO_OPTION);
@@ -129,7 +136,7 @@ public class Overseer /*extends PropertyChangeSupport */ {
         }
     }
 
-    public static void saveFile() {
+    public void saveFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save File");
 
@@ -150,7 +157,7 @@ public class Overseer /*extends PropertyChangeSupport */ {
     }
 
     @SuppressWarnings("unchecked")
-    public static void loadFile() {
+    public void loadFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Load File");
 
@@ -178,12 +185,12 @@ public class Overseer /*extends PropertyChangeSupport */ {
         }
     }
 
-    public static void copyShape() {
+    public void copyShape() {
         copiedShape = selectedShape;
         resetPasteOffset();
     }
 
-    public static void pasteShape() {
+    public void pasteShape() {
         if (copiedShape != null) {
             Shape newShape = copiedShape.clone();
             int newX, newY;
@@ -203,16 +210,16 @@ public class Overseer /*extends PropertyChangeSupport */ {
         }
     }
 
-    private static void resetPasteOffset() {
+    private void resetPasteOffset() {
         pasteOffsetX = 10;
         pasteOffsetY = 10;
     }
 
-    public static Shape getSelectedShape() {
+    public Shape getSelectedShape() {
         return selectedShape;
     }
 
-    public static void setSelectedShape(Shape selectedShape) {
+    public void setSelectedShape(Shape selectedShape) {
         Overseer.selectedShape = selectedShape;
     }
 }
