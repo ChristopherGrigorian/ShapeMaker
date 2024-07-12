@@ -94,8 +94,10 @@ public class Overseer /* I can't extend PropertyChangeSupport, and also be a sin
     }
 
     public void pushToStack(Shape shape) {
-        Overseer.shapes.add(shape);
-        Overseer.redoShapes.clear();
+        if (!((shape.getW() == 0) && (shape.getH() == 0))) {
+            Overseer.shapes.add(shape);
+            Overseer.redoShapes.clear();
+        }
     }
 
     public void undoFromStack() {

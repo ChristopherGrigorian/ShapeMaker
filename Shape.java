@@ -47,6 +47,14 @@ public abstract class Shape {
         return y;
     }
 
+    public int getW() {
+        return w;
+    }
+
+    public int getH() {
+        return h;
+    }
+
     public abstract boolean contains(int x, int y);
 
     public abstract void drawShape(Graphics g);
