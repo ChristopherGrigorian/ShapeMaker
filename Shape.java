@@ -11,7 +11,7 @@ import java.awt.*;
  *
  */
 
-public abstract class Shape {
+public abstract class Shape implements Component {
     protected Color color;
     protected int x, y, w, h;
 
