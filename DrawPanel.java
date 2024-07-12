@@ -19,10 +19,10 @@ public class DrawPanel extends JPanel {
         Overseer overseer = Overseer.getInstance();
         super.paintComponent(g);
         for (Shape s : overseer.getStack()) {
-            s.drawShape(g);
+            s.draw(g);
         }
         if (overseer.getBox() != null) {
-            overseer.getBox().drawShape(g);
+            overseer.getBox().draw(g);
         }
     }
 }

@@ -1,69 +1,26 @@
 import java.awt.*;
+import java.io.Serializable;
 
 /**
- * The Shape class is an abstract base class representing a drawable shape.
- * It includes common properties like color and dimensions, and defines an abstract method
- * for drawing the shape on a Graphics object.
- * All children can be serialized for save and load functionality
+ * The Shape interface represents a drawable shape. It includes methods for
+ * drawing, clicking, moving, and managing selection.
  *
- * @author Christopher Grigorian (Base class and serializing)
- * @author Eric Canihuante (Clone and Move)
+ * @author Christopher Grigorian (Base interface)
+ * @author Eric Canihuante (Selection and movement)
  *
  */
 
-public abstract class Shape {
-    protected Color color;
-    protected int x, y, w, h;
-
-    protected boolean selected = false;
-
-    // This default constructor is necessary
-    // DO NOT DELETE D:<
-    public Shape() {
-
-    }
-
-    public Shape(Color color, int x, int y, int w, int h) {
-        this.color = color;
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
-    public boolean getSelected() {
-        return selected;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getW() {
-        return w;
-    }
-
-    public int getH() {
-        return h;
-    }
-
-    public abstract boolean contains(int x, int y);
-
-    public abstract void drawShape(Graphics g);
-
-    @Override
-    public abstract Shape clone();
-
-    public void move(int dx, int dy) {
-        this.x += dx;
-        this.y += dy;
-    }
+public interface Shape extends Serializable, Cloneable {
+    void draw(Graphics g);
+    void move(int dx, int dy);
+    boolean contains(int x, int y);
+    void setSelected(boolean selected);
+    boolean getSelected();
+    void click();
+    int getX();
+    int getY();
+    int getW();
+    int getH();
+    Color getColor();
+    Shape clone();
 }

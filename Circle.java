@@ -12,52 +12,93 @@ import java.io.*;
  *
  */
 
-public class Circle extends Shape implements Serializable {
+public class Circle implements Shape, Serializable {
+    private static final long serialVersionUID = 1L;
+    private Color color;
+    private int x, y, w, h;
+    private boolean selected;
 
     public Circle(Color color, int x, int y, int w, int h) {
-        super(color, x, y, w, h);
+        this.color = color;
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
     }
 
     @Override
-    public void drawShape(Graphics g) {
+    public void draw(Graphics g) {
         g.setColor(color);
         g.fillOval(x, y, w, h);
+        g.setColor(Color.BLACK);
+        g.drawOval(x, y, w, h); // Draw the border of the circle
+
         if (selected) {
             g.setColor(Color.MAGENTA);
-            g.drawOval(x, y, w, h);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setStroke(new BasicStroke(2)); // Set the stroke for the selection border
+            g2d.drawOval(x - 1, y - 1, w + 2, h + 2); // Draw selection border
         }
     }
 
-    @Serial
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.writeInt(color.getRGB());
-        out.writeInt(x);
-        out.writeInt(y);
-        out.writeInt(w);
-        out.writeInt(h);
+    @Override
+    public void click() {
+        // Handle click
     }
 
-    @Serial
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        color = new Color(in.readInt());
-        x = in.readInt();
-        y = in.readInt();
-        w = in.readInt();
-        h = in.readInt();
+    @Override
+    public void move(int dx, int dy) {
+        x += dx;
+        y += dy;
     }
 
     @Override
     public boolean contains(int x, int y) {
-        int centerX = this.x + this.w / 2;
-        int centerY = this.y + this.h / 2;
-        int radius = this.w / 2;
+        return (x >= this.x && x <= this.x + w) && (y >= this.y && y <= this.y + h);
+    }
 
-        return Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2) <= Math.pow(radius, 2);
+    @Override
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Override
+    public boolean getSelected() {
+        return selected;
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public int getW() {
+        return w;
+    }
+
+    @Override
+    public int getH() {
+        return h;
+    }
+
+    @Override
+    public Color getColor() {
+        return color;
     }
 
     @Override
     public Shape clone() {
-        return new Circle(this.color, this.x, this.y, this.w, this.h);
+        try {
+            return (Shape) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(); // Can't happen
+        }
     }
 
     @Override
@@ -70,6 +111,5 @@ public class Circle extends Shape implements Serializable {
                 "\theight = " + h + "\n" +
                 ">\n";
     }
+
 }
-
-

@@ -12,16 +12,24 @@ import java.io.*;
  *
  */
 
-public class Line extends Shape implements Serializable {
+public class Line implements Shape, Serializable {
+    private static final long serialVersionUID = 1L;
+    private Color color;
+    private int x, y, w, h;
+    private boolean selected;
 
     public Line(Color color, int x, int y, int w, int h) {
-        super(color, x, y, w, h);
+        this.color = color;
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
     }
 
     @Override
-    public void drawShape(Graphics g) {
+    public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(new BasicStroke(7));
+        g2d.setStroke(new BasicStroke(3));
         g2d.setColor(color);
         g2d.drawLine(x, y, w, h);
         if (selected) {
@@ -31,22 +39,17 @@ public class Line extends Shape implements Serializable {
         }
     }
 
-    @Serial
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.writeInt(color.getRGB());
-        out.writeInt(x);
-        out.writeInt(y);
-        out.writeInt(w);
-        out.writeInt(h);
+    @Override
+    public void click() {
+        // Handle click
     }
 
-    @Serial
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        color = new Color(in.readInt());
-        x = in.readInt();
-        y = in.readInt();
-        w = in.readInt();
-        h = in.readInt();
+    @Override
+    public void move(int dx, int dy) {
+        this.x += dx;
+        this.y += dy;
+        this.w += dx;
+        this.h += dy;
     }
 
     @Override
@@ -76,15 +79,65 @@ public class Line extends Shape implements Serializable {
     }
 
     @Override
-    public Shape clone() {
-        return new Line(this.color, this.x, this.y, this.w, this.h);
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override
-    public void move(int dx, int dy) {
-        this.x += dx;
-        this.y += dy;
-        this.w += dx;
-        this.h += dy;
+    public boolean getSelected() {
+        return selected;
     }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public int getW() {
+        return w;
+    }
+
+    @Override
+    public int getH() {
+        return h;
+    }
+
+    @Override
+    public Color getColor() {
+        return color;
+    }
+
+    @Override
+    public Shape clone() {
+        try {
+            return (Shape) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(); // Can't happen
+        }
+    }
+
+    @Serial
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.writeInt(color.getRGB());
+        out.writeInt(x);
+        out.writeInt(y);
+        out.writeInt(w);
+        out.writeInt(h);
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        color = new Color(in.readInt());
+        x = in.readInt();
+        y = in.readInt();
+        w = in.readInt();
+        h = in.readInt();
+    }
+
 }

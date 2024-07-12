@@ -13,6 +13,7 @@ import java.awt.event.MouseMotionListener;
  *
  * @author Charlie Ray (Wrote selection, drag, drop, and click functionality)
  * @author Christopher Grigorian (Shape calculation, pushing to stack and box, clean-up)
+ * @author Eric Canihuante (Shape decorator)
  */
 
 public class MouListener implements MouseListener, MouseMotionListener {
@@ -21,6 +22,7 @@ public class MouListener implements MouseListener, MouseMotionListener {
     private int xDragStart = -1;
     private int yDragStart = -1;
     private Shape currentShape;
+    private int clickCount = 0;
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -43,6 +45,47 @@ public class MouListener implements MouseListener, MouseMotionListener {
         }
         Overseer.getInstance().setSelectedShape(currentShape);
         Overseer.getInstance().doSomething();
+
+        // Add decorator functionality
+        if (currentShape != null) {
+            clickCount++;
+            switch (clickCount) {
+                case 1:
+                    currentShape = new EyeDecorator(currentShape);
+                    break;
+                case 2:
+                    if (!(currentShape instanceof Arc)) {
+                        currentShape = new MouthDecorator(currentShape);
+                    }
+                    break;
+                case 3:
+                    currentShape = new HatDecorator(currentShape);
+                    break;
+                case 4:
+                    resetShape();
+                    clickCount = 0;
+                    break;
+            }
+            Overseer.getInstance().setSelectedShape(currentShape);
+            Overseer.getInstance().doSomething();
+
+        }
+    }
+
+    private void resetShape() {
+        Overseer overseer = Overseer.getInstance();
+        String currentShapeType = overseer.getShape();
+        switch (currentShapeType) {
+            case "Rectangle":
+                currentShape = new Rectangle(overseer.getColor(), x1, y1, 0, 0);
+                break;
+            case "Circle":
+                currentShape = new Circle(overseer.getColor(), x1, y1, 0, 0);
+                break;
+            case "Arc":
+                currentShape = new Arc(overseer.getColor(), x1, y1, 0, 0, false);
+                break;
+        }
     }
 
     @Override

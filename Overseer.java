@@ -66,7 +66,7 @@ public class Overseer /* I can't extend PropertyChangeSupport, and also be a sin
     public void setColor(Color color) {
         Overseer.color = color;
         if (selectedShape != null) {
-            selectedShape.color = color;
+            selectedShape.setSelected(true);
         }
         doSomething();
     }
@@ -94,7 +94,7 @@ public class Overseer /* I can't extend PropertyChangeSupport, and also be a sin
     }
 
     public void pushToStack(Shape shape) {
-        if (!((shape.getW() == 0) && (shape.getH() == 0))) {
+        if (!(shape.getW() == shape.getX() && shape.getH() == shape.getY())) {
             Overseer.shapes.add(shape);
             Overseer.redoShapes.clear();
         }

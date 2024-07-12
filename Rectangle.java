@@ -12,48 +12,103 @@ import java.io.*;
  *
  */
 
-public class Rectangle extends Shape implements Serializable {
+import java.awt.*;
+import java.io.Serializable;
+
+/**
+ * The Rectangle class represents a rectangle shape.
+ * It includes properties for color, position, and dimensions.
+ * It implements the Shape interface to ensure it can be drawn and moved.
+ *
+ * @author Christopher Grigorian
+ */
+public class Rectangle implements Shape, Serializable {
+    private static final long serialVersionUID = 1L;
+    private Color color;
+    private int x, y, w, h;
+    private boolean selected;
 
     public Rectangle(Color color, int x, int y, int w, int h) {
-        super(color, x, y, w, h);
+        this.color = color;
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
     }
 
     @Override
-    public void drawShape(Graphics g) {
+    public void draw(Graphics g) {
         g.setColor(color);
         g.fillRect(x, y, w, h);
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y, w, h); // Draw the border of the rectangle
+
         if (selected) {
             g.setColor(Color.MAGENTA);
-            g.drawRect(x, y, w, h);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setStroke(new BasicStroke(2)); // Set the stroke for the selection border
+            g2d.drawRect(x - 1, y - 1, w + 2, h + 2); // Draw selection border
         }
     }
 
-    @Serial
-    private void writeObject(ObjectOutputStream out) throws IOException, ClassNotFoundException {
-        out.writeInt(color.getRGB());
-        out.writeInt(x);
-        out.writeInt(y);
-        out.writeInt(w);
-        out.writeInt(h);
+    @Override
+    public void click() {
+        // Handle click
     }
 
-    @Serial
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        color = new Color(in.readInt());
-        x = in.readInt();
-        y = in.readInt();
-        w = in.readInt();
-        h = in.readInt();
+    @Override
+    public void move(int dx, int dy) {
+        x += dx;
+        y += dy;
     }
 
     @Override
     public boolean contains(int x, int y) {
-        return x >= this.x && x <= this.x + w && y >= this.y && y <= this.y + h;
+        return (x >= this.x && x <= this.x + w) && (y >= this.y && y <= this.y + h);
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Override
+    public boolean getSelected() {
+        return selected;
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public int getW() {
+        return w;
+    }
+
+    @Override
+    public int getH() {
+        return h;
+    }
+
+    @Override
+    public Color getColor() {
+        return color;
     }
 
     @Override
     public Shape clone() {
-        return new Rectangle(this.color, this.x, this.y, this.w, this.h);
+        try {
+            return (Shape) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(); // Can't happen
+        }
     }
 
     @Override

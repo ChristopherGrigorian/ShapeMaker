@@ -11,60 +11,112 @@ import java.io.*;
  *
  */
 
-public class Arc extends Shape implements Serializable {
-    private int startAngle;
+public class Arc implements Shape, Serializable {
+    private static final long serialVersionUID = 1L;
+    private Color color;
+    private int x, y, w, h;
     private boolean flip;
+    private boolean selected;
 
     public Arc(Color color, int x, int y, int w, int h, boolean flip) {
-        super(color, x, y, w, h);
+        this.color = color;
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
         this.flip = flip;
-        startAngle = flip ? 180 : 0;
-
     }
 
     @Override
-    public void drawShape(Graphics g) {
+    public void draw(Graphics g) {
         g.setColor(color);
-        int adjustedY = flip ? y - h : y;
-        int arcAngle = 180;
-        g.fillArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
+        if (flip) {
+            g.fillArc(x, y, w, h, 0, 180);
+        } else {
+            g.fillArc(x, y, w, h, 180, 180);
+        }
+        g.setColor(Color.BLACK);
+        if (flip) {
+            g.drawArc(x, y, w, h, 0, 180); // Draw the border of the arc
+        } else {
+            g.drawArc(x, y, w, h, 180, 180); // Draw the border of the arc
+        }
+
         if (selected) {
             g.setColor(Color.MAGENTA);
-            g.drawArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setStroke(new BasicStroke(3)); // Set the stroke for the selection border
+            if (flip) {
+                g2d.drawArc(x - 1, y - 1, w + 2, h + 2, 0, 180); // Draw selection border
+            } else {
+                g2d.drawArc(x - 1, y - 1, w + 2, h + 2, 180, 180); // Draw selection border
+            }
+            if (selected) {
+                g2d.setColor(Color.MAGENTA);
+                g2d.setStroke(new BasicStroke(1)); // Set the stroke for the selection border
+                g2d.drawLine(x, y, x + (w - x) / 2, y + (h - y) / 2); // Draw selection border
+            }
         }
     }
 
-    @Serial
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.writeInt(color.getRGB());
-        out.writeInt(x);
-        out.writeInt(y);
-        out.writeInt(w);
-        out.writeInt(h);
-        out.writeInt(startAngle);
-        out.writeBoolean(flip);
+    @Override
+    public void click() {
+        // Handle click
     }
 
-    @Serial
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        color = new Color(in.readInt());
-        x = in.readInt();
-        y = in.readInt();
-        w = in.readInt();
-        h = in.readInt();
-        startAngle = in.readInt();
-        flip = in.readBoolean();
+    @Override
+    public void move(int dx, int dy) {
+        x += dx;
+        y += dy;
     }
 
     @Override
     public boolean contains(int x, int y) {
-        // This covers both states (flip and not flipped)
-        return x >= this.x && x <= this.x + w && y >= this.y && y <= this.y + h;
+        return (x >= this.x && x <= this.x + w) && (y >= this.y && y <= this.y + h);
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Override
+    public boolean getSelected() {
+        return selected;
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public int getW() {
+        return w;
+    }
+
+    @Override
+    public int getH() {
+        return h;
+    }
+
+    @Override
+    public Color getColor() {
+        return color;
     }
 
     @Override
     public Shape clone() {
-        return new Arc(this.color, this.x, this.y, this.w, this.h, this.flip);
+        try {
+            return (Shape) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(); // Can't happen
+        }
     }
 
     @Override
@@ -77,4 +129,6 @@ public class Arc extends Shape implements Serializable {
                 "\theight = " + h + "\n" +
                 ">\n";
     }
+
+
 }
