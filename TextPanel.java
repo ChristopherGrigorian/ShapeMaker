@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class TextPanel extends JPanel implements PropertyChangeListener {
 
-    private JTextArea textArea;
+    private final JTextArea textArea;
 
     public TextPanel() {
         setPreferredSize(new Dimension(250, 600));
@@ -15,7 +15,7 @@ public class TextPanel extends JPanel implements PropertyChangeListener {
         JTextArea textArea = new JTextArea();
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        textArea.setEditable(true); // This will change to false, just testing.
+        textArea.setEditable(false);
         this.textArea = textArea;
 
         // Scroll Bar is invisible at the start, and will appear once text
