@@ -1,7 +1,7 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.awt.Color;
 import java.util.Optional;
@@ -16,9 +16,9 @@ import java.util.Stack;
  * @author Charlie Ray (Singleton)
  */
 
-public class Overseer extends PropertyChangeSupport {
+public class Overseer {//extends PropertyChangeSupport {
     private static Overseer instance;
-    //private final PropertyChangeSupport pcs;
+    private final PropertyChangeSupport pcs;
 
     private static final Stack<Component> shapes = new Stack<>();
     private static final Stack<Component> redoShapes = new Stack<>();
@@ -35,9 +35,9 @@ public class Overseer extends PropertyChangeSupport {
     private static int pasteOffsetY = 10;
 
     private Overseer() {
-        super(new Object());
+        //super(new Object());
 
-    //    pcs = new PropertyChangeSupport(this);
+        pcs = new PropertyChangeSupport(this);
     }
 
     public static Overseer getInstance() {
@@ -81,7 +81,7 @@ public class Overseer extends PropertyChangeSupport {
 
     public void doSomething() {
         savePerformed = false;
-        firePropertyChange("shapeChanges", null, shapes);
+        pcs.firePropertyChange("shapeChanges", null, shapes);
         drawPanel.repaint();
     }
 
@@ -145,6 +145,14 @@ public class Overseer extends PropertyChangeSupport {
                 doSomething();
             }
         }
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
     }
 
     public void saveFile() {
