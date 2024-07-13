@@ -1,4 +1,7 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
 import java.io.*;
 
 /**
@@ -24,7 +27,7 @@ public class Line extends Shape implements Serializable {
         g2d.setStroke(new BasicStroke(7));
         g2d.setColor(color);
         g2d.drawLine(x, y, w, h);
-        if (selected) {
+        if (Overseer.getInstance().getSelectedShape().equals(this)) {
             g2d.setColor(Color.MAGENTA);
             g2d.setStroke(new BasicStroke(1));
             g2d.drawLine(x, y, w, h);

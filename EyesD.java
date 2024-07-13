@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.Graphics;
 
 public class EyesD extends ShapeDecorator {
 
@@ -10,5 +10,6 @@ public class EyesD extends ShapeDecorator {
 
     private void addEyes(Graphics g) {
         // Add eye logic
+        System.out.println("eyes drawn");
     }
 }

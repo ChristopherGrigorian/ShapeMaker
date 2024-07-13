@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.Graphics;
 
 public class HatD extends ShapeDecorator {
 
@@ -10,5 +10,6 @@ public class HatD extends ShapeDecorator {
 
     private void addHat(Graphics g) {
         // Add eye logic
+        System.out.println("Hat drawn");
     }
 }

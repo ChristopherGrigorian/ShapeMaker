@@ -1,6 +1,8 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Optional;
+import java.util.Stack;
 
 /**
  * The MouListener class implements mouse listeners to handle mouse events
@@ -21,22 +23,21 @@ public class MouListener implements MouseListener, MouseMotionListener {
     private int xDragStart = -1;
     private int yDragStart = -1;
     private Shape currentShape;
+    private Optional<Shape> selectedShape;
 
     @Override
     public void mouseClicked(MouseEvent e) {
         // Force reset selections
-        for (Shape s : Overseer.getInstance().getStack()) {
-            s.setSelected(false);
-        }
         int selectedX = e.getX();
         int selectedY = e.getY();
         Shape s = findShape(selectedX, selectedY);
         if (currentShape != null && currentShape != s) {
-            currentShape.setSelected(!currentShape.getSelected());
+            selectedShape = Optional.of(currentShape);
+            Overseer.getInstance().setSelectedShape(selectedShape.get());
             Overseer.getInstance().doSomething();
         }
         if (s != null) {
-            s.setSelected(!s.getSelected());
+            selectedShape = null;
             currentShape = s;
         } else {
             currentShape = null;
@@ -103,9 +104,14 @@ public class MouListener implements MouseListener, MouseMotionListener {
 
     private Shape findShape(int x, int y) {
         for (int i = Overseer.getInstance().getStack().size() - 1; i >= 0; i--) {
-            Shape s = Overseer.getInstance().getStack().get(i);
-            if (s.contains(x, y)) {
-                return s;
+            Component s = Overseer.getInstance().getStack().get(i);
+            while ((s instanceof ShapeDecorator)) {
+                s = ((ShapeDecorator) s).getComponent();
+            }
+            if (s instanceof Shape) {
+                if (((Shape) s).contains(x, y)) {
+                    return (Shape) s;
+                }
             }
         }
         return null;

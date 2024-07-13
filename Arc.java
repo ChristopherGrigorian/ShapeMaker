@@ -1,4 +1,5 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.io.*;
 
 /**
@@ -28,7 +29,7 @@ public class Arc extends Shape implements Serializable {
         int adjustedY = flip ? y - h : y;
         int arcAngle = 180;
         g.fillArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
-        if (selected) {
+        if (Overseer.getInstance().getSelectedShape().equals(this)) {
             g.setColor(Color.MAGENTA);
             g.drawArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
         }

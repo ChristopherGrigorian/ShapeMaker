@@ -1,5 +1,6 @@
 import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
 
 /**
  * The Frame class represents the main application window.

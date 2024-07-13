@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.Graphics;
 
 public class MouthD extends ShapeDecorator {
     @Override
@@ -9,5 +9,6 @@ public class MouthD extends ShapeDecorator {
 
     private void addMouth(Graphics g) {
         // Add eye logic
+        System.out.println("Mouth Drawn");
     }
 }

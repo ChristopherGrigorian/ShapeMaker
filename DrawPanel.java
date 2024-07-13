@@ -1,5 +1,6 @@
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  * The DrawPanel class is a custom JPanel that handles drawing shapes onto the panel.
@@ -18,7 +19,7 @@ public class DrawPanel extends JPanel {
     public void paintComponent(Graphics g) {
         Overseer overseer = Overseer.getInstance();
         super.paintComponent(g);
-        for (Shape s : overseer.getStack()) {
+        for (Component s : overseer.getStack()) {
             s.drawShape(g);
         }
         if (overseer.getBox() != null) {

@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.Graphics;
 
 public class ShapeDecorator implements Component {
 
@@ -6,6 +6,10 @@ public class ShapeDecorator implements Component {
 
     public void setComponent(Component component) {
         this.component = component;
+    }
+
+    public Component getComponent() {
+        return component;
     }
 
     @Override

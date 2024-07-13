@@ -1,4 +1,5 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  * The Shape class is an abstract base class representing a drawable shape.

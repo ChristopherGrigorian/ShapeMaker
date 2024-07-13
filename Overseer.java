@@ -1,9 +1,10 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.*;
+import java.awt.Color;
+import java.util.Optional;
 import java.util.Stack;
 
 /**
@@ -19,9 +20,9 @@ public class Overseer /* I can't extend PropertyChangeSupport, and also be a sin
     private static Overseer instance;
     private final PropertyChangeSupport pcs;
 
-    private static final Stack<Shape> shapes = new Stack<>();
-    private static final Stack<Shape> redoShapes = new Stack<>();
-    private static final Stack<Shape> clearedShapes = new Stack<>();
+    private static final Stack<Component> shapes = new Stack<>();
+    private static final Stack<Component> redoShapes = new Stack<>();
+    private static final Stack<Component> clearedShapes = new Stack<>();
     private static JPanel drawPanel;
     private static Color color;
     private static String shape;
@@ -79,7 +80,7 @@ public class Overseer /* I can't extend PropertyChangeSupport, and also be a sin
         Overseer.shape = shape;
     }
 
-    public Stack<Shape> getShapeStack() {
+    public Stack<Component> getShapeStack() {
         return shapes;
     }
 
@@ -89,7 +90,7 @@ public class Overseer /* I can't extend PropertyChangeSupport, and also be a sin
         drawPanel.repaint();
     }
 
-    public Stack<Shape> getStack() {
+    public Stack<Component> getStack() {
         return shapes;
     }
 
@@ -230,11 +231,15 @@ public class Overseer /* I can't extend PropertyChangeSupport, and also be a sin
         pasteOffsetY = 10;
     }
 
-    public Shape getSelectedShape() {
-        return selectedShape;
+    public Optional<Shape> getSelectedShape() {
+        return Optional.ofNullable(selectedShape);
     }
 
     public void setSelectedShape(Shape selectedShape) {
         Overseer.selectedShape = selectedShape;
+        EyesD eyes = new EyesD();
+        eyes.setComponent(selectedShape);
+        getShapeStack().remove(selectedShape);
+        getShapeStack().push(eyes);
     }
 }

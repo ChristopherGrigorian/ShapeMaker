@@ -1,4 +1,5 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.io.*;
 
 /**
@@ -22,7 +23,7 @@ public class Circle extends Shape implements Serializable {
     public void drawShape(Graphics g) {
         g.setColor(color);
         g.fillOval(x, y, w, h);
-        if (selected) {
+        if (Overseer.getInstance().getSelectedShape().equals(this)) {
             g.setColor(Color.MAGENTA);
             g.drawOval(x, y, w, h);
         }

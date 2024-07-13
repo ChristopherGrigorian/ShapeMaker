@@ -1,5 +1,6 @@
 import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Stack;
@@ -31,9 +32,9 @@ public class TextPanel extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        Stack<Shape> shapes = ((Overseer) evt.getSource()).getShapeStack();
+        Stack<Component> shapes = ((Overseer) evt.getSource()).getShapeStack();
         clearText();
-        for (Shape shape : shapes) {
+        for (Component shape : shapes) {
             appendText(shape.toString());
         }
     }
