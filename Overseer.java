@@ -16,9 +16,9 @@ import java.util.Stack;
  * @author Charlie Ray (Singleton)
  */
 
-public class Overseer /* I can't extend PropertyChangeSupport, and also be a singleton- CR*/{
+public class Overseer extends PropertyChangeSupport {
     private static Overseer instance;
-    private final PropertyChangeSupport pcs;
+    //private final PropertyChangeSupport pcs;
 
     private static final Stack<Component> shapes = new Stack<>();
     private static final Stack<Component> redoShapes = new Stack<>();
@@ -33,8 +33,11 @@ public class Overseer /* I can't extend PropertyChangeSupport, and also be a sin
     private static Shape selectedShape;
     private static int pasteOffsetX = 10;
     private static int pasteOffsetY = 10;
+
     private Overseer() {
-        pcs = new PropertyChangeSupport(this);
+        super(new Object());
+
+    //    pcs = new PropertyChangeSupport(this);
     }
 
     public static Overseer getInstance() {
@@ -42,14 +45,6 @@ public class Overseer /* I can't extend PropertyChangeSupport, and also be a sin
             instance = new Overseer();
         }
         return instance;
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(listener);
     }
 
     public JPanel getDrawPanel() {
@@ -86,7 +81,7 @@ public class Overseer /* I can't extend PropertyChangeSupport, and also be a sin
 
     public void doSomething() {
         savePerformed = false;
-        pcs.firePropertyChange("shapeChanges", null, shapes);
+        firePropertyChange("shapeChanges", null, shapes);
         drawPanel.repaint();
     }
 
