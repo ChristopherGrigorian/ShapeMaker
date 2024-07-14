@@ -1,6 +1,7 @@
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public abstract class ShapeDecorator implements Component {
+public abstract class ShapeDecorator implements Component, Serializable {
     protected Component component;
 
     public void setComponent(Component component) {

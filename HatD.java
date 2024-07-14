@@ -23,10 +23,10 @@ public class HatD extends ShapeDecorator {
             int hatX = x;
             int hatY = y - hatHeight / 2;
 
-            g.setColor(Color.GRAY);
+            g.setColor(Color.DARK_GRAY);
             g.fillRect(hatX, hatY, hatWidth, hatHeight);
 
-            int brimHeight = hatHeight / 4;
+            int brimHeight = hatHeight / 3;
             int brimY = hatY + hatHeight - brimHeight;
             g.fillRect(hatX - hatWidth / 4, brimY, hatWidth + hatWidth / 2, brimHeight);
         }

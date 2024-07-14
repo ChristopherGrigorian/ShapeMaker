@@ -26,15 +26,15 @@ public class EyesD extends ShapeDecorator {
             int leftEyeX = x + w / 4;
             g.setColor(Color.WHITE);
             g.fillOval(leftEyeX, eyeY, eyeWidth, eyeHeight);
-            g.setColor(Color.BLACK);
-            g.fillOval(leftEyeX + eyeWidth / 4, eyeY + eyeHeight / 4, eyeWidth / 2, eyeHeight / 2);
+            g.setColor(Color.BLUE);
+            g.fillOval(leftEyeX + eyeWidth / 3, eyeY + eyeHeight / 3, eyeWidth / 2, eyeHeight / 2);
 
             // Right eye
             int rightEyeX = x + (3 * w / 4) - eyeWidth;
             g.setColor(Color.WHITE);
             g.fillOval(rightEyeX, eyeY, eyeWidth, eyeHeight);
-            g.setColor(Color.BLACK);
-            g.fillOval(rightEyeX + eyeWidth / 4, eyeY + eyeHeight / 4, eyeWidth / 2, eyeHeight / 2);
+            g.setColor(Color.BLUE);
+            g.fillOval(rightEyeX + eyeWidth / 3, eyeY + eyeHeight / 3, eyeWidth / 2, eyeHeight / 2);
         }
     }
 

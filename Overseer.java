@@ -245,9 +245,7 @@ public class Overseer {//extends PropertyChangeSupport {
         while ((s instanceof ShapeDecorator)) {
             s = ((ShapeDecorator) s).getComponent();
         }
-        if (s instanceof Shape) {
-            setSelectedShape((Shape) s);
-        }
+        setSelectedShape((Shape) s);
 
         getStack().remove(selectedComponent);
         getStack().push(selectedComponent.nextDecorator());

@@ -23,7 +23,7 @@ public class MouthD extends ShapeDecorator {
             int mouthX = x + w / 4;
             int mouthY = y + (3 * h / 4);
 
-            g.setColor(Color.RED);
+            g.setColor(Color.DARK_GRAY);
             g.fillArc(mouthX, mouthY, mouthWidth, mouthHeight, 0, -180);
         }
     }
