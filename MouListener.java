@@ -29,6 +29,9 @@ public class MouListener implements MouseListener, MouseMotionListener {
         int selectedY = e.getY();
         Shape s = findShape(selectedX, selectedY);
         Component c = findComponent(selectedX, selectedY);
+//        if (s == currentShape) {
+//            s.iterateComponent();
+//        }
         if (c != null) {
             Overseer.getInstance().setSelectedComponent(c);
             currentShape = s;
