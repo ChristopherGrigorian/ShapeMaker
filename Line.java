@@ -90,4 +90,9 @@ public class Line extends Shape implements Serializable {
         this.w += dx;
         this.h += dy;
     }
+
+    @Override
+    public Component nextDecorator() {
+        return this;
+    }
 }
