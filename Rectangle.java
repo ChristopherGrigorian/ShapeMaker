@@ -53,8 +53,29 @@ public class Rectangle extends Shape implements Serializable {
     }
 
     @Override
-    public Shape clone() {
-        return new Rectangle(this.color, this.x, this.y, this.w, this.h);
+    public Component clone() {
+        int targetIndex = Overseer.getInstance().getShapeIndex(this);
+        Component target = Overseer.getInstance().getStackIndex(targetIndex);
+        Rectangle newRect = new Rectangle(this.color, this.x, this.y, this.w, this.h);
+        if (target instanceof EyesD) {
+            EyesD newEyes = new EyesD();
+            newEyes.setComponent(newRect);
+            return newEyes;
+        } else if (target instanceof MouthD) {
+            MouthD newMouth = new MouthD();
+            EyesD newEyes = new EyesD();
+            newMouth.setComponent(newEyes);
+            newEyes.setComponent(newRect);
+            return newMouth;
+        } else {
+            HatD newHat = new HatD();
+            MouthD newMouth = new MouthD();
+            EyesD newEyes = new EyesD();
+            newHat.setComponent(newMouth);
+            newMouth.setComponent(newEyes);
+            newEyes.setComponent(newRect);
+            return newHat;
+        }
     }
 
     @Override

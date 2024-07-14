@@ -38,4 +38,12 @@ public abstract class ShapeDecorator implements Component, Serializable {
     public int getH() {
         return component.getH();
     }
+
+    @Override
+    public void move(int dx, int dy) {
+        if (component != null) {
+            component.move(dx, dy);
+        }
+    }
+
 }

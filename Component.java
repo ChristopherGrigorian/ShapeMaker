@@ -7,4 +7,5 @@ public interface Component {
     int getW();
     int getH();
     Component nextDecorator();
+    void move(int dx, int dy);
 }

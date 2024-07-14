@@ -107,8 +107,6 @@ public class MouListener implements MouseListener, MouseMotionListener {
         return null;
     }
 
-
-
     private Shape findShape(int x, int y) {
         for (int i = Overseer.getInstance().getStack().size() - 1; i >= 0; i--) {
             Component s = Overseer.getInstance().getStack().get(i);

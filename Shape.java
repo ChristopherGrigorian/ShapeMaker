@@ -52,8 +52,9 @@ public abstract class Shape implements Component {
     public abstract void drawShape(Graphics g);
 
     @Override
-    public abstract Shape clone();
+    public abstract Component clone();
 
+    @Override
     public void move(int dx, int dy) {
         this.x += dx;
         this.y += dy;
