@@ -37,4 +37,10 @@ public class EyesD extends ShapeDecorator {
             g.fillOval(rightEyeX + eyeWidth / 4, eyeY + eyeHeight / 4, eyeWidth / 2, eyeHeight / 2);
         }
     }
+
+    public Component nextDecorator() {
+        MouthD mouth = new MouthD();
+        mouth.setComponent(this);
+        return mouth;
+    }
 }

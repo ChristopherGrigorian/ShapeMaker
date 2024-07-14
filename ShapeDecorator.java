@@ -1,6 +1,6 @@
 import java.awt.Graphics;
 
-public class ShapeDecorator implements Component {
+public abstract class ShapeDecorator implements Component {
     protected Component component;
 
     public void setComponent(Component component) {

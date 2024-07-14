@@ -70,4 +70,10 @@ public abstract class Shape implements Component {
     public int hashCode() {
         return Objects.hash(color, x, y, w, h);
     }
+
+    public Component nextDecorator() {
+        EyesD eyes = new EyesD();
+        eyes.setComponent(this);
+        return eyes;
+    }
 }

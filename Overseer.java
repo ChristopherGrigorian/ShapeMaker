@@ -33,7 +33,6 @@ public class Overseer {//extends PropertyChangeSupport {
     private static Component selectedComponent;
     private static int pasteOffsetX = 10;
     private static int pasteOffsetY = 10;
-    private static int decorationState = 0;
 
     private Overseer() {
         //super(new Object());
@@ -241,8 +240,8 @@ public class Overseer {//extends PropertyChangeSupport {
 
     public void setSelectedComponent(Component setComponent) {
         Overseer.selectedComponent = setComponent;
-
         Component s = selectedComponent;
+
         while ((s instanceof ShapeDecorator)) {
             s = ((ShapeDecorator) s).getComponent();
         }
@@ -250,30 +249,8 @@ public class Overseer {//extends PropertyChangeSupport {
             setSelectedShape((Shape) s);
         }
 
-        decorationState = (decorationState + 1) % 4;
-
-        Component toPush = selectedShape;
-
-        switch (decorationState) {
-            case 1 -> {
-                EyesD eyes = new EyesD();
-                eyes.setComponent(selectedComponent);
-                toPush = eyes;
-            }
-            case 2 -> {
-                MouthD mouth = new MouthD();
-                mouth.setComponent(selectedComponent);
-                toPush = mouth;
-            }
-            case 3 -> {
-                HatD hat = new HatD();
-                hat.setComponent(selectedComponent);
-                toPush = hat;
-            }
-        }
-
         getStack().remove(selectedComponent);
-        getStack().push(toPush);
+        getStack().push(selectedComponent.nextDecorator());
 
         doSomething();
     }

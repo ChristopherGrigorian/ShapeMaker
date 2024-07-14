@@ -27,4 +27,10 @@ public class MouthD extends ShapeDecorator {
             g.fillArc(mouthX, mouthY, mouthWidth, mouthHeight, 0, -180);
         }
     }
+
+    public Component nextDecorator() {
+        HatD hat = new HatD();
+        hat.setComponent(this);
+        return hat;
+    }
 }

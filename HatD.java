@@ -31,4 +31,8 @@ public class HatD extends ShapeDecorator {
             g.fillRect(hatX - hatWidth / 4, brimY, hatWidth + hatWidth / 2, brimHeight);
         }
     }
+
+    public Component nextDecorator() {
+        return Overseer.getInstance().getSelectedShape();
+    }
 }

@@ -6,4 +6,5 @@ public interface Component {
     int getY();
     int getW();
     int getH();
+    Component nextDecorator();
 }
