@@ -1,7 +1,6 @@
 import java.awt.Graphics;
 
 public class ShapeDecorator implements Component {
-
     protected Component component;
 
     public void setComponent(Component component) {
@@ -17,5 +16,25 @@ public class ShapeDecorator implements Component {
         if (component != null) {
             component.drawShape(g);
         }
+    }
+
+    @Override
+    public int getX() {
+        return component.getX();
+    }
+
+    @Override
+    public int getY() {
+        return component.getY();
+    }
+
+    @Override
+    public int getW() {
+        return component.getW();
+    }
+
+    @Override
+    public int getH() {
+        return component.getH();
     }
 }

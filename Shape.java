@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Objects;
 
 /**
  * The Shape class is an abstract base class representing a drawable shape.
@@ -16,8 +17,6 @@ public abstract class Shape implements Component {
     protected Color color;
     protected int x, y, w, h;
 
-    protected boolean selected = false;
-
     // This default constructor is necessary
     // DO NOT DELETE D:<
     public Shape() {
@@ -30,14 +29,6 @@ public abstract class Shape implements Component {
         this.y = y;
         this.w = w;
         this.h = h;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
-    public boolean getSelected() {
-        return selected;
     }
 
     public int getX() {
@@ -66,5 +57,17 @@ public abstract class Shape implements Component {
     public void move(int dx, int dy) {
         this.x += dx;
         this.y += dy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Shape shape)) return false;
+        return x == shape.x && y == shape.y && w == shape.w && h == shape.h && Objects.equals(color, shape.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, x, y, w, h);
     }
 }

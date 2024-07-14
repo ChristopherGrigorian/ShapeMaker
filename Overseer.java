@@ -4,7 +4,6 @@ import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.awt.Color;
-import java.util.Optional;
 import java.util.Stack;
 
 /**
@@ -31,8 +30,10 @@ public class Overseer {//extends PropertyChangeSupport {
 
     private static Shape copiedShape;
     private static Shape selectedShape;
+    private static Component selectedComponent;
     private static int pasteOffsetX = 10;
     private static int pasteOffsetY = 10;
+    private static int decorationState = 0;
 
     private Overseer() {
         //super(new Object());
@@ -73,10 +74,6 @@ public class Overseer {//extends PropertyChangeSupport {
 
     public void setShape(String shape) {
         Overseer.shape = shape;
-    }
-
-    public Stack<Component> getShapeStack() {
-        return shapes;
     }
 
     public void doSomething() {
@@ -234,15 +231,55 @@ public class Overseer {//extends PropertyChangeSupport {
         pasteOffsetY = 10;
     }
 
-    public Optional<Shape> getSelectedShape() {
-        return Optional.ofNullable(selectedShape);
+    public Shape getSelectedShape() {
+        return selectedShape;
     }
 
     public void setSelectedShape(Shape selectedShape) {
         Overseer.selectedShape = selectedShape;
-        EyesD eyes = new EyesD();
-        eyes.setComponent(selectedShape);
-        getShapeStack().remove(selectedShape);
-        getShapeStack().push(eyes);
     }
+
+    public void setSelectedComponent(Component setComponent) {
+        Overseer.selectedComponent = setComponent;
+
+        Component s = selectedComponent;
+        while ((s instanceof ShapeDecorator)) {
+            s = ((ShapeDecorator) s).getComponent();
+        }
+        if (s instanceof Shape) {
+            setSelectedShape((Shape) s);
+        }
+
+        decorationState = (decorationState + 1) % 4;
+
+        Component toPush = selectedShape;
+
+        switch (decorationState) {
+            case 1 -> {
+                EyesD eyes = new EyesD();
+                eyes.setComponent(selectedComponent);
+                toPush = eyes;
+            }
+            case 2 -> {
+                MouthD mouth = new MouthD();
+                mouth.setComponent(selectedComponent);
+                toPush = mouth;
+            }
+            case 3 -> {
+                HatD hat = new HatD();
+                hat.setComponent(selectedComponent);
+                toPush = hat;
+            }
+            case 4 -> {
+                // Clear decorations by resetting to the original selectedShape
+                toPush = selectedShape;
+            }
+        }
+
+        getStack().remove(selectedComponent);
+        getStack().push(toPush);
+
+        doSomething();
+    }
+
 }
