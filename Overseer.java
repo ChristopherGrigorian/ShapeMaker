@@ -270,10 +270,6 @@ public class Overseer {//extends PropertyChangeSupport {
                 hat.setComponent(selectedComponent);
                 toPush = hat;
             }
-            case 4 -> {
-                // Clear decorations by resetting to the original selectedShape
-                toPush = selectedShape;
-            }
         }
 
         getStack().remove(selectedComponent);
