@@ -27,7 +27,7 @@ public class Line extends Shape implements Serializable {
         g2d.setStroke(new BasicStroke(7));
         g2d.setColor(color);
         g2d.drawLine(x, y, w, h);
-        if (Overseer.getInstance().getSelectedShape() != null && Overseer.getInstance().getSelectedShape().equals(this)) {
+        if (Overseer.getInstance().getBaseShapeComponent() != null && Overseer.getInstance().getBaseShapeComponent().equals(this)) {
             g2d.setColor(Color.MAGENTA);
             g2d.setStroke(new BasicStroke(1));
             g2d.drawLine(x, y, w, h);
@@ -94,5 +94,16 @@ public class Line extends Shape implements Serializable {
     @Override
     public Component nextDecorator() {
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "<Line\n" +
+                "\tcolor=" + color + "\n" +
+                "\tx = " + x + "\n" +
+                "\ty = " + y + "\n" +
+                "\twidth = " + w + "\n" +
+                "\theight = " + h + "\n" +
+                ">\n";
     }
 }
