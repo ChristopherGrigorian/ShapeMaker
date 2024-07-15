@@ -1,5 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.io.*;
 
 /**
@@ -21,11 +20,13 @@ public class Rectangle extends Shape implements Serializable {
 
     @Override
     public void drawShape(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
         g.setColor(color);
         g.fillRect(x, y, w, h);
         if (Overseer.getInstance().getBaseShapeComponent() != null && Overseer.getInstance().getBaseShapeComponent().equals(this)) {
-            g.setColor(Color.MAGENTA);
-            g.drawRect(x, y, w, h);
+            g2d.setColor(Color.MAGENTA);
+            g2d.setStroke(new BasicStroke(1));
+            g2d.drawRect(x, y, w, h);
         }
     }
 
@@ -59,7 +60,7 @@ public class Rectangle extends Shape implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Shape: Rectangle\nColor: R=%d G=%d B=%d\nPosition: X=%d Y=%d\nSize: Width=%d" +
-                " Height=%d\n\n", color.getRed(), color.getGreen(), color.getBlue(), x, y, w, h);
+        return String.format("Shape: Rectangle\nColor: R = %d | G = %d | B = %d\nPosition: X = %d | Y = %d\nSize: Width " +
+                "= %d | " + "Height = %d\n\n", color.getRed(), color.getGreen(), color.getBlue(), x, y, w, h);
     }
 }

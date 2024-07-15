@@ -98,7 +98,7 @@ public class Line extends Shape implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Shape: Line\nColor: R=%d G=%d B=%d\nPosition 1: X1=%d Y1=%d\nPosition 2: X2=%d " +
-                "Y2=%d\n\n", color.getRed(), color.getGreen(), color.getBlue(), x, y, w, h);
+        return String.format("Shape: Line\nColor: R = %d | G = %d | B = %d\nPosition 1: X1 = %d | Y1 = %d\nPosition 2: "
+                + "X2 = %d | " + " " + "Y2 = %d\n\n", color.getRed(), color.getGreen(), color.getBlue(), x, y, w, h);
     }
 }

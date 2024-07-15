@@ -6,7 +6,7 @@ import java.awt.Color;
  * It extends the ShapeDecorator class and includes functionality to draw a mouth on a shape.
  *
  * @author Eric Canihuante (Structure, comments, and debugging)
- * @author Ethan Ellis (Drawing logic and coding)
+ * @author Harold Ellis (Drawing logic and coding)
  */
 
 

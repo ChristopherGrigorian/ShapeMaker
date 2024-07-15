@@ -1,5 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.io.*;
 
 /**
@@ -26,13 +25,15 @@ public class Arc extends Shape implements Serializable {
 
     @Override
     public void drawShape(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
         g.setColor(color);
         int adjustedY = flip ? y - h : y;
         int arcAngle = 180;
         g.fillArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
         if (Overseer.getInstance().getBaseShapeComponent() != null && Overseer.getInstance().getBaseShapeComponent().equals(this)) {
-            g.setColor(Color.MAGENTA);
-            g.drawArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
+            g2d.setColor(Color.MAGENTA);
+            g2d.setStroke(new BasicStroke(1));
+            g2d.drawArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
         }
     }
 
@@ -70,7 +71,7 @@ public class Arc extends Shape implements Serializable {
     }
     @Override
     public String toString() {
-        return String.format("Shape: Arc\nColor: R=%d G=%d B=%d\nPosition: X=%d Y=%d\nSize: Width=%d " +
-                "Height=%d\n\n", color.getRed(), color.getGreen(), color.getBlue(), x, y, w, h);
+        return String.format("Shape: Arc\nColor: R = %d | G = %d | B = %d\nPosition: X = %d | Y = %d\nSize: Width = %d " +
+                "|" + " Height = %d\n\n", color.getRed(), color.getGreen(), color.getBlue(), x, y, w, h);
     }
 }

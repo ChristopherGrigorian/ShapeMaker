@@ -143,7 +143,10 @@ public class MouListener implements MouseListener, MouseMotionListener {
                 case "Rectangle" -> overseer.pushToStack(new Rectangle(overseer.getColor(), x, y, w, h));
                 case "Circle" -> overseer.pushToStack(new Circle(overseer.getColor(), x, y, w, h));
                 case "Arc" -> overseer.pushToStack(new Arc(overseer.getColor(), x, y, w, h, flip));
-                case "Line" -> overseer.pushToStack(new Line(overseer.getColor(), x1, y1, e.getX(), e.getY()));
+                case "Line" -> { if (x1 != e.getX() || y1 != e.getY()) { // Ensure line has non-zero length
+                    overseer.pushToStack(new Line(overseer.getColor(), x1, y1, e.getX(), e.getY()));
+                    }
+                }
             }
             overseer.setBox(null);
         }

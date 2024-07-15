@@ -6,7 +6,7 @@ import java.awt.Color;
  * It extends the ShapeDecorator class and includes functionality to draw eyes on a shape.
  *
  * @author Eric Canihuante (Structure, comments, and debugging)
- * @author Ethan Ellis (Drawing logic and debugging)
+ * @author Harold Ellis (Drawing logic and debugging)
  */
 
 public class EyesD extends ShapeDecorator {
