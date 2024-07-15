@@ -1,6 +1,14 @@
 import java.awt.Graphics;
 import java.awt.Color;
 
+/**
+ * The HatD class is a decorator that adds a hat to a shape.
+ * It extends the ShapeDecorator class and includes functionality to draw a hat on a shape.
+ *
+ * @author Eric Canihuante (Structure, comments, and debugging)
+ * @author Ethan Ellis (Drawing logic and coding)
+ */
+
 public class HatD extends ShapeDecorator {
     private int x, y, w, h;
 
@@ -21,7 +29,7 @@ public class HatD extends ShapeDecorator {
             int hatWidth = w;
             int hatHeight = h / 3;
             int hatX = x;
-            int hatY = y - hatHeight / 2;
+            int hatY = y - hatHeight / 3;
 
             g.setColor(Color.DARK_GRAY);
             g.fillRect(hatX, hatY, hatWidth, hatHeight);

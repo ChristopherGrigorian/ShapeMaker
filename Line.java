@@ -11,7 +11,7 @@ import java.io.*;
  *
  * @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
  * @author Christopher Grigorian (Base class and serializing)
- * @author Eric Canihuante (Clone and Move)
+ * @author Eric Canihuante (Clone and toString fixes)
  *
  */
 
@@ -98,12 +98,7 @@ public class Line extends Shape implements Serializable {
 
     @Override
     public String toString() {
-        return "<Line\n" +
-                "\tcolor=" + color + "\n" +
-                "\tx = " + x + "\n" +
-                "\ty = " + y + "\n" +
-                "\twidth = " + w + "\n" +
-                "\theight = " + h + "\n" +
-                ">\n";
+        return String.format("Shape: Line\nColor: R=%d G=%d B=%d\nPosition 1: X1=%d Y1=%d\nPosition 2: X2=%d " +
+                "Y2=%d\n\n", color.getRed(), color.getGreen(), color.getBlue(), x, y, w, h);
     }
 }

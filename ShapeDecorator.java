@@ -1,6 +1,17 @@
 import java.awt.Graphics;
 import java.io.Serializable;
 
+/**
+ * The ShapeDecorator class is an abstract class that implements the Component interface
+ * and provides a base for creating decorators that add functionality to Shape objects.
+ * This class handles the common functionality for all shape decorators.
+ *
+ * @author Ethan Ellis (Structure and coding)
+ * @author Christopher Grigorian (Base class and serializing)
+ * @author Eric Canihuante (Comments and debugging)
+ */
+
+
 public abstract class ShapeDecorator implements Component, Serializable {
     protected Component component;
 

@@ -1,6 +1,14 @@
 import java.awt.Graphics;
 import java.awt.Color;
 
+/**
+ * The EyesD class is a decorator that adds eyes to a shape.
+ * It extends the ShapeDecorator class and includes functionality to draw eyes on a shape.
+ *
+ * @author Eric Canihuante (Structure, comments, and debugging)
+ * @author Ethan Ellis (Drawing logic and debugging)
+ */
+
 public class EyesD extends ShapeDecorator {
     private int x, y, w, h;
 
@@ -18,23 +26,23 @@ public class EyesD extends ShapeDecorator {
 
     private void addEyes(Graphics g) {
         if (component != null) {
-            int eyeWidth = w / 5;
-            int eyeHeight = h / 3;
-            int eyeY = y + h / 4;
+            int eyeWidth = w / 4;
+            int eyeHeight = h / 4;
+            int eyeY = y + h / 3;
 
             // Left eye
-            int leftEyeX = x + w / 4;
+            int leftEyeX = x + w / 5;
             g.setColor(Color.WHITE);
             g.fillOval(leftEyeX, eyeY, eyeWidth, eyeHeight);
-            g.setColor(Color.BLUE);
-            g.fillOval(leftEyeX + eyeWidth / 3, eyeY + eyeHeight / 3, eyeWidth / 2, eyeHeight / 2);
+            g.setColor(Color.GRAY);
+            g.fillOval(leftEyeX + (3 * eyeWidth / 6), eyeY + eyeHeight / 3, eyeWidth / 3, eyeHeight / 3);
 
             // Right eye
-            int rightEyeX = x + (3 * w / 4) - eyeWidth;
+            int rightEyeX = x + (3 * w / 5) - eyeWidth / 2;
             g.setColor(Color.WHITE);
             g.fillOval(rightEyeX, eyeY, eyeWidth, eyeHeight);
-            g.setColor(Color.BLUE);
-            g.fillOval(rightEyeX + eyeWidth / 3, eyeY + eyeHeight / 3, eyeWidth / 2, eyeHeight / 2);
+            g.setColor(Color.GRAY);
+            g.fillOval(rightEyeX + (eyeWidth / 5), eyeY + eyeHeight / 3, eyeWidth / 3, eyeHeight / 3);
         }
     }
 

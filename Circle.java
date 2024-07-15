@@ -9,7 +9,7 @@ import java.io.*;
  *
  *  @author CharlieRay668 (Charlie Ray) (Wrote Contains methods for all shapes)
  *  @author Christopher Grigorian (Base class and serializing)
- *  @author Eric Canihuante (Clone)
+ *  @author Eric Canihuante (toString fixes)
  *
  */
 
@@ -63,13 +63,8 @@ public class Circle extends Shape implements Serializable {
 
     @Override
     public String toString() {
-        return "<Circle\n" +
-                "\tcolor=" + color + "\n" +
-                "\tx = " + x + "\n" +
-                "\ty = " + y + "\n" +
-                "\twidth = " + w + "\n" +
-                "\theight = " + h + "\n" +
-                ">\n";
+        return String.format("Shape: Circle\nColor: R=%d G=%d B=%d\nPosition: X=%d Y=%d\nSize: Width=%d " +
+                "Height=%d\n\n", color.getRed(), color.getGreen(), color.getBlue(), x, y, w, h);
     }
 }
 
