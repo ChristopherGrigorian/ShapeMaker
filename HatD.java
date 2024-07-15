@@ -36,4 +36,11 @@ public class HatD extends ShapeDecorator {
         return Overseer.getInstance().getBaseShapeComponent();
     }
 
+    @Override
+    public Component clone() {
+        HatD newHat = new HatD();
+        newHat.setComponent(this.getComponent().clone());
+        return newHat;
+    }
+
 }

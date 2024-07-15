@@ -33,4 +33,11 @@ public class MouthD extends ShapeDecorator {
         hat.setComponent(this);
         return hat;
     }
+
+    @Override
+    public Component clone() {
+        MouthD newMouth = new MouthD();
+        newMouth.setComponent(this.getComponent().clone());
+        return newMouth;
+    }
 }

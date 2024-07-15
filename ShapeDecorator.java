@@ -4,6 +4,8 @@ import java.io.Serializable;
 public abstract class ShapeDecorator implements Component, Serializable {
     protected Component component;
 
+    public abstract Component clone();
+
     public void setComponent(Component component) {
         this.component = component;
     }

@@ -49,4 +49,11 @@ public class EyesD extends ShapeDecorator {
             return mouth;
         }
     }
+
+    @Override
+    public Component clone() {
+        EyesD newEyes = new EyesD();
+        newEyes.setComponent(this.getComponent().clone());
+        return newEyes;
+    }
 }

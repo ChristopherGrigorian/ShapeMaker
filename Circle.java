@@ -58,28 +58,7 @@ public class Circle extends Shape implements Serializable {
 
     @Override
     public Component clone() {
-        int targetIndex = Overseer.getInstance().getShapeIndex(this);
-        Component target = Overseer.getInstance().getStackIndex(targetIndex);
-        Circle newCirc = new Circle(this.color, this.x, this.y, this.w, this.h);
-        if (target instanceof EyesD) {
-            EyesD newEyes = new EyesD();
-            newEyes.setComponent(newCirc);
-            return newEyes;
-        } else if (target instanceof MouthD) {
-            MouthD newMouth = new MouthD();
-            EyesD newEyes = new EyesD();
-            newMouth.setComponent(newEyes);
-            newEyes.setComponent(newCirc);
-            return newMouth;
-        } else {
-            HatD newHat = new HatD();
-            MouthD newMouth = new MouthD();
-            EyesD newEyes = new EyesD();
-            newHat.setComponent(newMouth);
-            newMouth.setComponent(newEyes);
-            newEyes.setComponent(newCirc);
-            return newHat;
-        }
+        return new Circle(this.color, this.x, this.y, this.w, this.h);
     }
 
     @Override

@@ -65,20 +65,7 @@ public class Arc extends Shape implements Serializable {
 
     @Override
     public Component clone() {
-        int targetIndex = Overseer.getInstance().getShapeIndex(this);
-        Component target = Overseer.getInstance().getStackIndex(targetIndex);
-        Arc newArc = new Arc(this.color, this.x, this.y, this.w, this.h, this.flip);
-        if (target instanceof EyesD) {
-            EyesD newEyes = new EyesD();
-            newEyes.setComponent(newArc);
-            return newEyes;
-        } else {
-            HatD newHat = new HatD();
-            EyesD newEyes = new EyesD();
-            newHat.setComponent(newEyes);
-            newEyes.setComponent(newArc);
-            return newHat;
-        }
+        return new Arc(this.color, this.x, this.y, this.w, this.h, this.flip);
     }
     @Override
     public String toString() {
