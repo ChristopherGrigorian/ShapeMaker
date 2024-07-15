@@ -29,7 +29,7 @@ public class Arc extends Shape implements Serializable {
         int adjustedY = flip ? y - h : y;
         int arcAngle = 180;
         g.fillArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
-        if (Overseer.getInstance().getSelectedShape() != null && Overseer.getInstance().getSelectedShape().equals(this)) {
+        if (Overseer.getInstance().getBaseShapeComponent() != null && Overseer.getInstance().getBaseShapeComponent().equals(this)) {
             g.setColor(Color.MAGENTA);
             g.drawArc(x, adjustedY, w, h * 2, startAngle, arcAngle);
         }
