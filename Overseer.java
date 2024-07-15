@@ -27,7 +27,7 @@ public class Overseer extends PropertyChangeSupport {
     private static boolean savePerformed = false;
 
     private static Shape copiedShape;
-    private static Shape selectedShape;
+    private static Shape baseSelectedShape;
     private static Component selectedComponent;
     private static int pasteOffsetX = 10;
     private static int pasteOffsetY = 10;
@@ -57,8 +57,8 @@ public class Overseer extends PropertyChangeSupport {
 
     public void setColor(Color color) {
         Overseer.color = color;
-        if (selectedShape != null) {
-            selectedShape.color = color;
+        if (baseSelectedShape != null) {
+            baseSelectedShape.color = color;
         }
         doSomething();
     }
@@ -206,7 +206,7 @@ public class Overseer extends PropertyChangeSupport {
     }
 
     public void copyShape() {
-        copiedShape = selectedShape;
+        copiedShape = baseSelectedShape;
         resetPasteOffset();
     }
 
@@ -235,27 +235,25 @@ public class Overseer extends PropertyChangeSupport {
         pasteOffsetY = 10;
     }
 
-    public Shape getSelectedShape() {
-        return selectedShape;
+    public Shape getBaseShapeComponent() {
+        return baseSelectedShape;
     }
 
-    public void setSelectedShape(Shape selectedShape) {
-        Overseer.selectedShape = selectedShape;
+    public void setBaseShapeComponent(Shape selectedShape) {
+        Overseer.baseSelectedShape = selectedShape;
     }
 
-    public void setSelectedComponent(Component setComponent) {
-        Overseer.selectedComponent = setComponent;
-        Component s = selectedComponent;
+    public Component getSelectedComponent() {
+        return selectedComponent;
+    }
 
-        while ((s instanceof ShapeDecorator)) {
-            s = ((ShapeDecorator) s).getComponent();
-        }
-        setSelectedShape((Shape) s);
+    public void setSelectedComponent(Component selectedComponent) {
+        Overseer.selectedComponent = selectedComponent;
+    }
 
-        getStack().remove(selectedComponent);
-        getStack().push(selectedComponent.nextDecorator());
-
-        doSomething();
+    public void pushDecorator() {
+        shapes.remove(selectedComponent);
+        shapes.push(selectedComponent.nextDecorator());
     }
 
 }

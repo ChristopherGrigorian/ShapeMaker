@@ -33,7 +33,7 @@ public class HatD extends ShapeDecorator {
     }
 
     public Component nextDecorator() {
-        return Overseer.getInstance().getSelectedShape();
+        return Overseer.getInstance().getBaseShapeComponent();
     }
 
 }

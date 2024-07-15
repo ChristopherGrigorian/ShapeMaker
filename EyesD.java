@@ -39,13 +39,14 @@ public class EyesD extends ShapeDecorator {
     }
 
     public Component nextDecorator() {
-        if (Overseer.getInstance().getSelectedShape() instanceof Arc) {
+        if (Overseer.getInstance().getBaseShapeComponent() instanceof Arc) {
             HatD hat = new HatD();
             hat.setComponent(this);
             return hat;
+        } else {
+            MouthD mouth = new MouthD();
+            mouth.setComponent(this);
+            return mouth;
         }
-        MouthD mouth = new MouthD();
-        mouth.setComponent(this);
-        return mouth;
     }
 }

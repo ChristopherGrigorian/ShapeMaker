@@ -20,18 +20,31 @@ public class MouListener implements MouseListener, MouseMotionListener {
     private int y1;
     private int xDragStart = -1;
     private int yDragStart = -1;
-    private Shape currentShape;
+    private Shape currentComponentBaseShape;
+    private Component currentComponent;
+    private boolean firstSelection = true;
 
     @Override
     public void mouseClicked(MouseEvent e) {
         // Force reset selections
         int selectedX = e.getX();
         int selectedY = e.getY();
-        Shape s = findShape(selectedX, selectedY);
         Component c = findComponent(selectedX, selectedY);
         if (c != null) {
+            // If I switch components, set first selection to true
+            if (Overseer.getInstance().getBaseShapeComponent() != currentComponentBaseShape) {
+                firstSelection = true;
+            }
+
             Overseer.getInstance().setSelectedComponent(c);
-            currentShape = s;
+            Overseer.getInstance().setBaseShapeComponent(currentComponentBaseShape);
+
+            if (!firstSelection) {
+                Overseer.getInstance().pushDecorator();
+            } else {
+                firstSelection = false;
+            }
+            currentComponent = c;
         }
         Overseer.getInstance().doSomething();
     }
@@ -41,8 +54,8 @@ public class MouListener implements MouseListener, MouseMotionListener {
         x1 = e.getX();
         y1 = e.getY();
         xDragStart = yDragStart = -1;
-        currentShape = findShape(x1, y1);
-        if (currentShape != null) {
+        currentComponent = findComponent(x1, y1);
+        if (currentComponent != null) {
             xDragStart = x1;
             yDragStart = y1;
         }
@@ -52,8 +65,6 @@ public class MouListener implements MouseListener, MouseMotionListener {
     public void mouseReleased(MouseEvent e) {
         if (xDragStart != -1 && yDragStart != -1) {
             xDragStart = yDragStart = -1;
-//        } else if (e.getX() == x1 && e.getY() == y1) {
-//            Overseer.getInstance().setSelectedShape(null);
         } else {
             shapeCalculation(e, false);
         }
@@ -75,14 +86,14 @@ public class MouListener implements MouseListener, MouseMotionListener {
             int dx = e.getX() - xDragStart;
             int dy = e.getY() - yDragStart;
 
-            if (currentShape != null) {
-                currentShape.move(dx, dy);
+            if (currentComponent != null) {
+                currentComponent.move(dx, dy);
             }
 
             xDragStart = e.getX();
             yDragStart = e.getY();
             Overseer.getInstance().doSomething();
-        } else if (currentShape == null) {
+        } else if (currentComponent == null) {
             shapeCalculation(e, true);
         }
     }
@@ -100,22 +111,8 @@ public class MouListener implements MouseListener, MouseMotionListener {
             }
             if (s instanceof Shape) {
                 if (((Shape) s).contains(x, y)) {
+                    currentComponentBaseShape = (Shape) s;
                     return Overseer.getInstance().getStack().get(i);
-                }
-            }
-        }
-        return null;
-    }
-
-    private Shape findShape(int x, int y) {
-        for (int i = Overseer.getInstance().getStack().size() - 1; i >= 0; i--) {
-            Component s = Overseer.getInstance().getStack().get(i);
-            while ((s instanceof ShapeDecorator)) {
-                s = ((ShapeDecorator) s).getComponent();
-            }
-            if (s instanceof Shape) {
-                if (((Shape) s).contains(x, y)) {
-                    return (Shape) s;
                 }
             }
         }

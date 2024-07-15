@@ -23,7 +23,7 @@ public class Circle extends Shape implements Serializable {
     public void drawShape(Graphics g) {
         g.setColor(color);
         g.fillOval(x, y, w, h);
-        if (Overseer.getInstance().getSelectedShape() != null && Overseer.getInstance().getSelectedShape().equals(this)) {
+        if (Overseer.getInstance().getBaseShapeComponent() != null && Overseer.getInstance().getBaseShapeComponent().equals(this)) {
             g.setColor(Color.MAGENTA);
             g.drawOval(x, y, w, h);
         }

@@ -23,7 +23,7 @@ public class Rectangle extends Shape implements Serializable {
     public void drawShape(Graphics g) {
         g.setColor(color);
         g.fillRect(x, y, w, h);
-        if (Overseer.getInstance().getSelectedShape() != null && Overseer.getInstance().getSelectedShape().equals(this)) {
+        if (Overseer.getInstance().getBaseShapeComponent() != null && Overseer.getInstance().getBaseShapeComponent().equals(this)) {
             g.setColor(Color.MAGENTA);
             g.drawRect(x, y, w, h);
         }
