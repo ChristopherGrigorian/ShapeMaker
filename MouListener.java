@@ -45,7 +45,11 @@ public class MouListener implements MouseListener, MouseMotionListener {
                 firstSelection = false;
             }
             currentComponent = c;
+        } else {
+            Overseer.getInstance().setSelectedComponent(null);
+            Overseer.getInstance().setBaseShapeComponent(null);
         }
+
         Overseer.getInstance().doSomething();
     }
 
