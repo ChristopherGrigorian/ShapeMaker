@@ -5,6 +5,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Stack;
 
+/**
+ * Class that writes shape data as they are being drawn.
+ *
+ * @author Christopher Grigorian
+ *
+ */
+
 public class TextPanel extends JPanel implements PropertyChangeListener {
 
     private final JTextArea textArea;
