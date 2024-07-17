@@ -68,5 +68,3 @@ public class Circle extends Shape implements Serializable {
                 "Width = %d | " + "Height = %d\n\n", color.getRed(), color.getGreen(), color.getBlue(), x, y, w, h);
     }
 }
-
-
